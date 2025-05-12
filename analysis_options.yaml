@@ -1,0 +1,5 @@
+include: package:flutter_lints/flutter.yaml
+
+# remove blue lines in code, maybe?xD
+# rules:
+#   prefer_const_constructors: false
