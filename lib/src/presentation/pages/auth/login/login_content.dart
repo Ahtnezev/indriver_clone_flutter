@@ -27,28 +27,11 @@ class LoginContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start, // horizontal
             mainAxisAlignment: MainAxisAlignment.center, // vertical
             children: [
-              RotatedBox(
-                quarterTurns: 1, // rotate the text
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 27,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
+
+             _textLoginRotated(),
               SizedBox(height: 50,),
-              RotatedBox(
-                quarterTurns: 1,
-                child: Text(
-                  'Register',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
+
+              _textRegisterRotated(),
               SizedBox(height: 90,),
             ],
           ),
@@ -74,36 +57,12 @@ class LoginContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 50,),
-                Text(
-                  'Welcome',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                Text('back...', style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
+                
+                _textWelcome('Welcome'),
+                _textWelcome('back...'),
             
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    'assets/img/car.png',
-                    width: 150,
-                    height: 150,
-                  ),
-                ),
-            
-                Text('Log in', style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
+                _imageCar(),
+                _textLogin(),
                 
                 DefaultTextField(text: 'Email', icon: Icons.email_outlined),
 
@@ -116,6 +75,13 @@ class LoginContent extends StatelessWidget {
                 Spacer(),
 
                 DefaultButton(text: 'LOGIN',),
+
+                _separatorOr(),
+                SizedBox(height: 10),
+
+                _textDontHaveAccount(),
+                SizedBox(height: 50),
+
               ],
             ),
           ),
@@ -123,4 +89,110 @@ class LoginContent extends StatelessWidget {
       ],
     );
   }
+
+  Widget _textDontHaveAccount() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('¿No tienes cuenta?', style: TextStyle(
+          color: Colors.grey[100],
+          fontSize: 16
+          ),
+        ),
+
+        SizedBox(width: 7),
+        
+        Text('Registrate', style: TextStyle(
+          color: Colors.grey[100],
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _separatorOr() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 25,
+          height: 1,
+          color: Colors.white,
+          margin: EdgeInsets.only(right: 5),
+        ),
+        Text('O', style: TextStyle(
+          color: Colors.white,
+          fontSize: 17
+          ),
+        ),
+        Container(
+          width: 25,
+          height: 1,
+          color: Colors.white,
+          margin: EdgeInsets.only(left: 5),
+        ),
+      ],
+    );
+  }
+
+  Widget _imageCar(){
+    return Container(
+        alignment: Alignment.centerRight,
+        child: Image.asset(
+          'assets/img/car.png',
+          width: 150,
+          height: 150,
+        ),
+      );
+  }
+
+  Widget _textLogin() {
+    return Text('Log in', style: TextStyle(
+          fontSize: 24,
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+        ),
+      );
+  }
+
+  Widget _textWelcome(String text) {
+    return Text(
+        text,
+        style: TextStyle(
+          fontSize: 30,
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+        ),
+      );
+  }
+
+  Widget _textRegisterRotated() {
+    return RotatedBox(
+      quarterTurns: 1,
+      child: Text(
+        'Register',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 24,
+        ),
+      ),
+    );
+  }
+
+  Widget _textLoginRotated() {
+    return RotatedBox(
+      quarterTurns: 1, // rotate the text
+      child: Text(
+        'Login',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 27,
+          fontWeight: FontWeight.bold
+        ),
+      ),
+    );
+  }
+
 }
