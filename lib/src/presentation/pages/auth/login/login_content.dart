@@ -52,37 +52,37 @@ class LoginContent extends StatelessWidget {
           // width: MediaQuery.of(context).size.width * 0.8,
           margin: EdgeInsets.only(left: 60, bottom: 60),
           child: Container(
+            height: MediaQuery.of(context).size.height, // expandimos el container
             margin: EdgeInsets.only(left: 15, right: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 50,),
-                
-                _textWelcome('Welcome'),
-                _textWelcome('back...'),
-            
-                _imageCar(),
-                _textLogin(),
-                
-                DefaultTextField(text: 'Email', icon: Icons.email_outlined),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 50,),
+                  _textWelcome('Welcome'),
+                  _textWelcome('back...'),
+                  _imageCar(),
+                  _textLogin(),
+                  
+                  DefaultTextField(text: 'Email', icon: Icons.email_outlined),
+                  DefaultTextField(
+                    text: 'Password',
+                    icon: Icons.lock_outline,
+                    margin: EdgeInsets.only(top: 15, left: 20, right: 20),
+                  ),
+              
+                  // Spacer(), error con scrollview,
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
 
-                DefaultTextField(
-                  text: 'Password',
-                  icon: Icons.lock_outline,
-                  margin: EdgeInsets.only(top: 15, left: 20, right: 20),
-                ),
-
-                Spacer(),
-
-                DefaultButton(text: 'LOGIN',),
-
-                _separatorOr(),
-                SizedBox(height: 10),
-
-                _textDontHaveAccount(context),
-                SizedBox(height: 50),
-
-              ],
+                  DefaultButton(text: 'LOGIN',),
+                  _separatorOr(),
+                  SizedBox(height: 10),
+              
+                  _textDontHaveAccount(context),
+                  SizedBox(height: 50),
+              
+                ],
+              ),
             ),
           ),
         ),
