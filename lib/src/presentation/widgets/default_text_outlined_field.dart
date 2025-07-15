@@ -18,15 +18,15 @@ class DefaultTextOutlinedField extends StatelessWidget {
       height: 45,
       margin: margin,
       decoration: BoxDecoration(
-        color: Color.fromRGBO(255,255,255,0.2),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
-        ),
+        // color: Color.fromRGBO(255,255,255,0.2),
+        // borderRadius: BorderRadius.only(
+        //   topLeft: Radius.circular(15),
+        //   bottomRight: Radius.circular(15),
+        // ),
       ),
       child: TextFormField(
         decoration: InputDecoration(
-          label: Text(text),
+          label: Text(text, style: TextStyle(color: Colors.white)),
           // border: InputBorder.none,
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -46,8 +46,8 @@ class DefaultTextOutlinedField extends StatelessWidget {
             child: Wrap(
               alignment: WrapAlignment.spaceEvenly,
               children: [
-                Icon(icon),
-                Container(height: 20, width: 1, color: Colors.grey),
+                Icon(icon, color: Colors.white),
+                Container(height: 20, width: 1, color: Colors.white),
               ],
             ),
           ),

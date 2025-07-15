@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_button.dart';
-import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_outlined_field.dart';
 
 
@@ -47,8 +46,8 @@ class RegisterContent extends StatelessWidget {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                const Color.fromARGB(255, 227, 225, 225),
-                const Color.fromARGB(255, 170, 166, 166)
+                Color.fromARGB(255, 12, 38, 145),
+                Color.fromARGB(255, 34, 156, 249)
               ]
             )
           ),
@@ -119,7 +118,7 @@ class RegisterContent extends StatelessWidget {
           'assets/img/destination.png',
           width: MediaQuery.of(context).size.width * 0.6,
           height: MediaQuery.of(context).size.width * 0.4,
-          opacity: AlwaysStoppedAnimation(0.1),
+          opacity: AlwaysStoppedAnimation(0.2),
         ),
     );
   }
