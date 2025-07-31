@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DefaultButton extends StatelessWidget {
+
+  final Function() onPressed;
   final String text;
   final Color color;
   final Color textColor;
   final EdgeInsetsGeometry margin;
 
   const DefaultButton({
-    super.key,
     required this.text,
+    required this.onPressed,
     this.color = Colors.white,
     this.textColor = Colors.black,
     this.margin = const EdgeInsets.only(bottom: 20, left: 40, right: 40),
@@ -23,7 +25,9 @@ class DefaultButton extends StatelessWidget {
       // alignment: Alignment.center,
       margin: margin,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          onPressed();
+        },
         style: ElevatedButton.styleFrom(backgroundColor: color),
         child:
           Text(
