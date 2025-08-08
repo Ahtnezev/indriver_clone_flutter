@@ -1,4 +1,6 @@
 
+import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
+
 abstract class LoginEvent {}
 
 // solo inicializa el formulario
@@ -6,12 +8,12 @@ class LoginInitEvent extends LoginEvent {}
 
 // capturar cambios en los campos 
 class EmailChanged extends LoginEvent{
-  final String email;
+  final BlogFormItem email;
   EmailChanged({required this.email });
 }
 
 class PasswordChanged extends LoginEvent{
-  final String password;
+  final BlogFormItem password;
   PasswordChanged({required this.password });
 }
 

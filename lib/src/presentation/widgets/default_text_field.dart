@@ -5,12 +5,14 @@ class DefaultTextField extends StatelessWidget {
   final Function(String text) onChanged;
   final IconData icon;
   final EdgeInsetsGeometry margin;
+  final String? Function(String?)? validator;
 
   const DefaultTextField({
     required this.text,
     required this.icon,
     required this.onChanged,
-    this.margin = const EdgeInsets.only(top: 50, left: 20, right: 20)
+    this.margin = const EdgeInsets.only(top: 50, left: 20, right: 20),
+    this.validator
   });
 
   @override
@@ -29,6 +31,7 @@ class DefaultTextField extends StatelessWidget {
         onChanged: (text) {
           onChanged(text);
         },
+        validator: validator,
         decoration: InputDecoration(
           label: Text(text),
           border: InputBorder.none,

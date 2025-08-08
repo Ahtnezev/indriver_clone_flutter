@@ -13,18 +13,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-LoginBloc? _bloc;
-
   @override
   Widget build(BuildContext context) {
-
-    _bloc = BlocProvider.of<LoginBloc>(context);
 
     return Scaffold(
       // backgroundColor: Color.fromARGB(255, 24, 181, 254),
       body: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return LoginContent(_bloc);
+          return LoginContent(state);
         },
       ),
     );

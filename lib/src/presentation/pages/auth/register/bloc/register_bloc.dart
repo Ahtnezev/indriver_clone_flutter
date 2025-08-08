@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/bloc/register_event.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/bloc/register_state.dart';
+import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
+
+class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+  final formKey = GlobalKey<FormState>();
+
+  RegisterBloc() : super(RegisterState()) {
+    // practicamente inicializamos el estado (formulario)
+    on<RegisterInitEvent>((event, emit) {
+      // state. -> podemos acceder a las propiedades del estado (RegisterState)
+      emit(state.copyWith(formKey: formKey));
+    });
+
+    on<NameChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          name: BlogFormItem(
+            value: event.name.value,
+            error: event.name.value.isEmpty ? 'Ingresa el nombre' : null,
+          ),
+          formKey: formKey,
+        ),
+      );
+    });
+
+    on<LastnameChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          lastname: BlogFormItem(
+            value: event.lastname.value,
+            error: event.lastname.value.isEmpty ? 'Ingresa el apellido' : null,
+          ),
+          formKey: formKey,
+        ),
+      );
+    });
+
+    on<EmailChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          email: BlogFormItem(
+            value: event.email.value,
+            error: event.email.value.isEmpty ? 'Ingresa el correo' : null,
+          ),
+          formKey: formKey,
+        ),
+      );
+    });
+
+    on<PhoneChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          phone: BlogFormItem(
+            value: event.phone.value,
+            error: event.phone.value.isEmpty ? 'Ingresa el telefono' : null,
+          ),
+          formKey: formKey,
+        ),
+      );
+    });
+
+    on<PasswordChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          password: BlogFormItem(
+            value: event.password.value,
+            error: event.password.value.isEmpty
+              ? 'Ingresa el password'
+              : event.password.value.length < 6
+                ? 'Debe contener al menos 6 caracteres'
+                : null,
+          ),
+          formKey: formKey,
+        ),
+      );
+    });
+
+    on<PasswordConfirmChanged>((event, emit) {
+      emit(
+        state.copyWith(
+          passwordConfirm: BlogFormItem(
+            value: event.passwordConfirm.value,
+            error: event.passwordConfirm.value.isEmpty
+              ? 'Confirma el password'
+              : event.passwordConfirm.value.length < 6
+                ? 'Debe contener al menos 6 caracteres'
+                : event.passwordConfirm.value != state.password.value
+                  ? 'Los password no coinciden'
+                  : null,
+          ),
+          formKey: formKey,
+        ),
+      );
+    });
+
+    on<FormSubmit>((event, emit) {
+      print('name: ${state.name.value}');
+      print('lastname: ${state.lastname.value}');
+      print('email: ${state.email.value}');
+      print('phone: ${state.phone.value}');
+      print('password: ${state.password.value}');
+      print('confirmPassword: ${state.passwordConfirm.value}');
+    });
+
+    on<FormReset>((event, emit) {
+      state.formKey?.currentState?.reset();
+    });
+
+  }
+}
