@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indriver_clone_flutter/blog_providers.dart';
-import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_bloc.dart';
-import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/login_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/register_page.dart';
 

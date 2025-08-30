@@ -5,7 +5,7 @@ class BlogFormItem {
   final String value;
   final String? error;
 
-  BlogFormItem({
+  const BlogFormItem({
     this.value = '',
     this.error,
   });
