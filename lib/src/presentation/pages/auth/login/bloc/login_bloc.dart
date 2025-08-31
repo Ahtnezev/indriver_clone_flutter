@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/src/data/dataSource/remote/services/auth_service.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+
   final formKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
 
   LoginBloc() : super(LoginState()) {
+
     on<LoginInitEvent>((event, emit) {
       //! desde aqui podremos cambiar el valor de las variables -> LoginState
       emit(state.copyWith(formKey: formKey));
@@ -39,9 +43,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       ));
     });
 
-    on<FormSubmit>((event, emit) {
+    on<FormSubmit>((event, emit) async {
       print('Email: ${state.email.value}');
       print('Password: ${state.password.value}');
+      await authService.login(state.email.value, state.password.value);
     });
 
   }

@@ -12,7 +12,7 @@ class RegisterContent extends StatelessWidget {
 
   RegisterState state;
 
-  RegisterContent(this.state);
+  RegisterContent(this.state, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class RegisterContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start, // pasar al izq (hori)
               mainAxisAlignment: MainAxisAlignment.center, // centrar vertical
               children: [
-                _textLoginRotated(),
+                _textLoginRotated(context),
                 SizedBox(height: 100),
                 _textRegisterRotated(context),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.25),
@@ -184,7 +184,7 @@ class RegisterContent extends StatelessWidget {
         SizedBox(width: 5),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, 'login');
+            Navigator.pop(context);
           },
           child: Text('Inicia sesión',
                     style: TextStyle(
@@ -226,10 +226,15 @@ class RegisterContent extends StatelessWidget {
     );
   }
 
-  Widget _textLoginRotated() {
-    return RotatedBox(
-      quarterTurns: 1, // vertical
-      child: Text('Login', style: TextStyle(fontSize: 24, color: Colors.white),)
+  Widget _textLoginRotated(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: RotatedBox(
+        quarterTurns: 1, // vertical
+        child: Text('Login', style: TextStyle(fontSize: 24, color: Colors.white),)
+      ),
     );
   }
 
@@ -238,9 +243,9 @@ class RegisterContent extends StatelessWidget {
       quarterTurns: 1, // vertical
       child: GestureDetector(
         onTap: () {
-            Navigator.pushNamed(context, 'register');
+            Navigator.pop(context);
           },
-        child: Text('Registro',
+        child: Text('Register',
                 style: TextStyle(fontSize: 27,
                   color: Colors.white,
                   fontWeight: FontWeight.bold ),
