@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indriver_clone_flutter/src/data/dataSource/remote/services/auth_service.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/login_use_case.dart';
+import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
@@ -8,7 +9,7 @@ import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dar
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   final formKey = GlobalKey<FormState>();
-  AuthService authService = AuthService();
+  LoginUseCase loginUseCase = LoginUseCase();
 
   LoginBloc() : super(LoginState()) {
 
@@ -46,8 +47,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<FormSubmit>((event, emit) async {
       print('Email: ${state.email.value}');
       print('Password: ${state.password.value}');
-      await authService.login(state.email.value, state.password.value);
+
+      // await Future.delayed(Duration(seconds: 2), () async {
+      Resource response = await loginUseCase.run(
+        state.email.value,
+        state.password.value,
+      );
+      emit(state.copyWith(response: Loading(), formKey: formKey));
     });
+    // }); // remove in production
+
 
   }
 }
