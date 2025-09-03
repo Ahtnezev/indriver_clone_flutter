@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/auth/login_use_case.dart';
 import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_event.dart';
@@ -9,9 +10,9 @@ import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dar
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   final formKey = GlobalKey<FormState>();
-  LoginUseCase loginUseCase = LoginUseCase();
+  AuthUseCases authUseCases;
 
-  LoginBloc() : super(LoginState()) {
+  LoginBloc(this.authUseCases) : super(LoginState()) {
 
     on<LoginInitEvent>((event, emit) {
       //! desde aqui podremos cambiar el valor de las variables -> LoginState
@@ -49,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print('Password: ${state.password.value}');
 
       // await Future.delayed(Duration(seconds: 2), () async {
-      Resource response = await loginUseCase.run(
+      Resource response = await authUseCases.login.run(
         state.email.value,
         state.password.value,
       );

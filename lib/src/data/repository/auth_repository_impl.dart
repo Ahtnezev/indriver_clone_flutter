@@ -5,7 +5,9 @@ import 'package:indriver_clone_flutter/src/domain/repository/auth_repository.dar
 import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthService authService = AuthService();
+  // DI. Dependency Injection >.<
+  AuthService authService;
+  AuthRepositoryImpl(this.authService);
 
   @override
   Future<Resource<AuthResponse>> login(String email, String password) {
