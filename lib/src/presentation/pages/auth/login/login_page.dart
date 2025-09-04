@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_state.dart';
@@ -15,18 +16,23 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        final response = state.response;
-        if (response is ErrorData) {
-          print("Error Data: ${response.message}");
-        } else if (response is Success) {
-          print("Success Data: ${response.data}");
-        }
-      },
-      child: Scaffold(
-        // backgroundColor: Color.fromARGB(255, 24, 181, 254),
-        body: BlocBuilder<LoginBloc, LoginState>(
+    return Scaffold(
+      // backgroundColor: Color.fromARGB(255, 24, 181, 254),
+      body: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          final response = state.response;
+          if (response is ErrorData) {
+            debugPrint("Error Data: ${response.message}");
+            Fluttertoast.showToast(
+              msg: response.message,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+            );
+          } else if (response is Success) {
+            debugPrint("Success Data: ${response.data}");
+          }
+        },
+        child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             final response = state.response;
             if (response is Loading) {

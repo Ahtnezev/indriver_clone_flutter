@@ -1,7 +1,5 @@
 
-import 'package:indriver_clone_flutter/src/data/repository/auth_repository_impl.dart';
 import 'package:indriver_clone_flutter/src/domain/repository/auth_repository.dart';
-
 // DI (dependency injection) avoid instances, access to code in any class
 
 
