@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indriver_clone_flutter/src/data/dataSource/remote/services/auth_service.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
+import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
+  AuthUseCases authUseCases;
   final formKey = GlobalKey<FormState>();
-  AuthService authService = AuthService();
 
-  LoginBloc() : super(LoginState()) {
+  LoginBloc(this.authUseCases) : super(LoginState()) {
 
     on<LoginInitEvent>((event, emit) {
       //! desde aqui podremos cambiar el valor de las variables -> LoginState
@@ -44,10 +45,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
 
     on<FormSubmit>((event, emit) async {
-      print('Email: ${state.email.value}');
-      print('Password: ${state.password.value}');
-      await authService.login(state.email.value, state.password.value);
+      print('🐞 LoginBloc: Email: ${state.email.value}');
+      print('🐞 LoginBloc: Password: ${state.password.value}');
+
+      // await Future.delayed(Duration(seconds: 2), () async { 
+      Resource response = await authUseCases.login.run(
+        state.email.value,
+        state.password.value,
+      );
+      emit(state.copyWith(response: response, formKey: formKey));
     });
+    // }); // remove in production
+
 
   }
 }

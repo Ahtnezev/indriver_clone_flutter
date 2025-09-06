@@ -1,6 +1,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
 
 class LoginState extends Equatable {
@@ -9,28 +10,32 @@ class LoginState extends Equatable {
   final BlogFormItem email;
   final BlogFormItem password;
   final GlobalKey<FormState>? formKey;
+  final Resource? response;
 
   const LoginState({
     this.email = const BlogFormItem(error: 'Ingresa el email'), // 4:03 - 21.
     this.password = const BlogFormItem(error: 'Ingresa el password'),
-    this.formKey
+    this.formKey,
+    this.response
   });
 
   // lleva las mismas propiedades que el constructor
   LoginState copyWith({
     BlogFormItem? email,
     BlogFormItem? password,
-    GlobalKey<FormState>? formKey
+    GlobalKey<FormState>? formKey,
+    Resource? response,
   }) {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
       formKey: formKey,
+      response: response ?? this.response,
     );
   }
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password, response];
 
 
 }
