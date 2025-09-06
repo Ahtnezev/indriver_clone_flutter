@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
+import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/bloc/register_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/bloc/register_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+  AuthUseCases authUseCases;
   final formKey = GlobalKey<FormState>();
 
-  RegisterBloc() : super(RegisterState()) {
+  RegisterBloc(this.authUseCases) : super(RegisterState()) {
     // practicamente inicializamos el estado (formulario)
     on<RegisterInitEvent>((event, emit) {
       // state. -> podemos acceder a las propiedades del estado (RegisterState)
@@ -96,13 +99,27 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       );
     });
 
-    on<FormSubmit>((event, emit) {
+    on<FormSubmit>((event, emit) async {
       print('name: ${state.name.value}');
       print('lastname: ${state.lastname.value}');
       print('email: ${state.email.value}');
       print('phone: ${state.phone.value}');
       print('password: ${state.password.value}');
       print('confirmPassword: ${state.passwordConfirm.value}');
+
+      emit(
+        state.copyWith(
+          response: Loading(),
+          formKey: formKey, // keep the form state
+        ),
+      );
+      Resource response = await authUseCases.register.run(state.toUser());
+      emit(
+        state.copyWith(
+          response: response,
+          formKey: formKey, // keep the form state
+        ),
+      );
     });
 
     on<FormReset>((event, emit) {

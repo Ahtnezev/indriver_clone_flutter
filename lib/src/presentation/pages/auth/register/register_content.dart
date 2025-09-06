@@ -185,6 +185,7 @@ class RegisterContent extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.pop(context);
+            // Navigator.pushNamed(context, 'register');
           },
           child: Text('Inicia sesión',
                     style: TextStyle(
@@ -230,6 +231,7 @@ class RegisterContent extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
+        // Navigator.pushNamed(context, 'login');
       },
       child: RotatedBox(
         quarterTurns: 1, // vertical
@@ -243,7 +245,8 @@ class RegisterContent extends StatelessWidget {
       quarterTurns: 1, // vertical
       child: GestureDetector(
         onTap: () {
-            Navigator.pop(context);
+          Navigator.pop(context);
+          // Navigator.pushNamed(context, 'register');
           },
         child: Text('Register',
                 style: TextStyle(fontSize: 27,

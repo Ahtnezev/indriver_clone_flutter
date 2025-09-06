@@ -129,7 +129,8 @@ class LoginContent extends StatelessWidget {
   Widget _textDontHaveAccount(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        Navigator.pushNamed(context, 'register');
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -212,7 +213,7 @@ class LoginContent extends StatelessWidget {
   Widget _textRegisterRotated(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        Navigator.pushNamed(context, 'register');
       },
       child: RotatedBox(
         quarterTurns: 1,
