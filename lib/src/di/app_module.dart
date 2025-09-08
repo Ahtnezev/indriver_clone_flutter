@@ -1,25 +1,34 @@
+import 'package:indriver_clone_flutter/src/data/dataSource/local/sharefpref.dart';
 import 'package:indriver_clone_flutter/src/data/dataSource/remote/services/auth_service.dart';
 import 'package:indriver_clone_flutter/src/data/repository/auth_repository_impl.dart';
 import 'package:indriver_clone_flutter/src/domain/repository/auth_repository.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/get_user_session_use_case.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/auth/login_use_case.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/auth/register_use_case.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/save_user_session_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 @module
 abstract class AppModule {
+
+  @injectable
+  SharefPref get sharefPref => SharefPref();
+
   // to use in everywhere class
   @injectable
   AuthService get authService => AuthService();
 
   @injectable
-  AuthRepository get authRepository => AuthRepositoryImpl(authService);
+  AuthRepository get authRepository => AuthRepositoryImpl(authService,sharefPref);
 
   @injectable
   AuthUseCases get authUseCases => AuthUseCases(
     login: LoginUseCase(authRepository),
     register: RegisterUseCase(authRepository),
+    saveUserSession: SaveUserSessionUseCase(authRepository),
+    getUserSession: GetUserSessionUseCase(authRepository)
   );
   // we need to rebuild injectable file: injection.config.dart
-  // command: flutter packages pub run build_runner build
+  // command: flutter packages pub run build_runner build 
 }
