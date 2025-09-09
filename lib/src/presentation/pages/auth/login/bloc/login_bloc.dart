@@ -19,6 +19,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print("Auth response session: ${authResponse?.toJson()}");
       //! desde aqui podremos cambiar el valor de las variables -> LoginState
       emit(state.copyWith(formKey: formKey));
+
+      // that means: user logged and him information is stored in cache
+      if (authResponse != null) {
+        // notify state changes
+        emit(state.copyWith(formKey: formKey, response: Success(authResponse)));
+        // the redirect is on: login_page.dart file
+      }
+    });
+
+    on<SaveUserSession>((event, emit) async {
+      await authUseCases.saveUserSession.run(event.authResponse);
     });
 
     on<EmailChanged>((event, emit) {
@@ -31,10 +42,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           formKey: formKey
         )
       );
-    });
-
-    on<SaveUserSession>((event, emit) async {
-      await authUseCases.saveUserSession.run(event.authResponse);
     });
 
     on<PasswordChanged>((event, emit) {
@@ -55,11 +62,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print('🐞 LoginBloc: Email: ${state.email.value}');
       print('🐞 LoginBloc: Password: ${state.password.value}');
 
+      emit(state.copyWith(response: Loading(), formKey: formKey));
+
       // await Future.delayed(Duration(seconds: 2), () async { 
       Resource response = await authUseCases.login.run(
         state.email.value,
         state.password.value,
       );
+
       emit(state.copyWith(response: response, formKey: formKey));
     });
     // }); // remove in production

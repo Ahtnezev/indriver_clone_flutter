@@ -36,6 +36,13 @@ class _LoginPageState extends State<LoginPage> {
             context.read<LoginBloc>().add(
               SaveUserSession(authResponse: authResponse),
             );
+
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              'client/home',
+              (route) => false,
+            ); // no store history in screens 
+
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(

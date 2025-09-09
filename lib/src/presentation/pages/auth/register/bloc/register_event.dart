@@ -1,5 +1,6 @@
 
 
+import 'package:indriver_clone_flutter/src/domain/models/auth_response.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
 
 abstract class RegisterEvent {}
@@ -41,6 +42,11 @@ class PasswordConfirmChanged extends RegisterInitEvent {
   final BlogFormItem passwordConfirm;
 
   PasswordConfirmChanged({required this.passwordConfirm});
+}
+
+class SaveUserSession extends RegisterInitEvent {
+  final AuthResponse authResponse;
+  SaveUserSession({required this.authResponse});
 }
 
 class FormSubmit extends RegisterInitEvent {}
