@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/src/domain/models/auth_response.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/login_event.dart';
@@ -13,7 +14,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc(this.authUseCases) : super(LoginState()) {
 
-    on<LoginInitEvent>((event, emit) {
+    on<LoginInitEvent>((event, emit) async {
+      AuthResponse? authResponse = await authUseCases.getUserSession.run();
+      print("Auth response session: ${authResponse?.toJson()}");
       //! desde aqui podremos cambiar el valor de las variables -> LoginState
       emit(state.copyWith(formKey: formKey));
     });
@@ -28,6 +31,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           formKey: formKey
         )
       );
+    });
+
+    on<SaveUserSession>((event, emit) async {
+      await authUseCases.saveUserSession.run(event.authResponse);
     });
 
     on<PasswordChanged>((event, emit) {
