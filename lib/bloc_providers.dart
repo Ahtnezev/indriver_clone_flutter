@@ -22,6 +22,6 @@ List<BlocProvider> blocProviders = [
   BlocProvider<ClientHomeBloc>(
     create:
         (context) =>
-            ClientHomeBloc(),
+            ClientHomeBloc(locator<AuthUseCases>()),
   ),
 ];

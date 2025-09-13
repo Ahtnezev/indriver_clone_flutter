@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/main.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_state.dart';
@@ -53,6 +54,17 @@ class _ClientHomePageState extends State<ClientHomePage> {
                     Navigator.pop(
                       context,
                     ); // redirect when user click in item of menu from drawer
+                  },
+                ),
+                ListTile(
+                  title: Text("Cerrar sesion"),
+                  onTap: () {
+                    context.read<ClientHomeBloc>().add(Logout());
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainApp()),
+                      (route) => false,
+                    );
                   },
                 ),
               ],
