@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/profile_info_content.dart';
 
 
 class ProfileInfoPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class ProfileInfoPageState extends State<ProfileInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Profile screen"),),
+      body: ProfileInfoContent(),
     );
   }
 }
