@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:indriver_clone_flutter/src/domain/models/user.dart';
 
 class ProfileInfoContent extends StatelessWidget {
-  const ProfileInfoContent({super.key});
+  User? user;
+
+  ProfileInfoContent(this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +50,12 @@ class ProfileInfoContent extends StatelessWidget {
                 ),
               ),
             ),
-            Text("NOMBRE DE USUARIO", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-            Text("Correo Eletronico", style: TextStyle(color: Colors.grey[700]),),
-            Text("7581004931", style: TextStyle(color: Colors.grey[700]),),
+            Text(
+              '${user?.name} ${user?.lastname}' ?? '',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Text(user?.email ?? '', style: TextStyle(color: Colors.grey[700])),
+            Text(user?.phone ?? '', style: TextStyle(color: Colors.grey[700])),
           ],
         ),
       ),
