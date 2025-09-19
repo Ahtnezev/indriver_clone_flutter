@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:indriver_clone_flutter/src/domain/models/user.dart';
+import 'package:indriver_clone_flutter/src/presentation/widgets/default_icon_back.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 
 class ProfileUpdateContent extends StatelessWidget {
@@ -19,15 +20,16 @@ class ProfileUpdateContent extends StatelessWidget {
           ],
         ),
         _cardUserInfo(context),
+        DefaultIconBack(margin: EdgeInsets.only(top: 60, left: 30))
       ],
     );
   }
 
   Widget _cardUserInfo(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 20, right: 20, top: 85),
+      margin: EdgeInsets.only(left: 20, right: 20, top: 120),
       width: MediaQuery.of(context).size.width,
-      height: 320,
+      height: MediaQuery.of(context).size.height * 0.5,
       child: Card(
         color: Colors.white,
         surfaceTintColor: Colors.white,
@@ -51,13 +53,22 @@ class ProfileUpdateContent extends StatelessWidget {
             ),
             DefaultTextField(text: 'Nombre', icon: Icons.person, onChanged: (text) {
               
-            }, backgroundColor: Colors.grey[200]!,),
+            },
+              backgroundColor: Colors.grey[200]!,
+              margin: EdgeInsets.only(left: 30, right: 30, top: 15),
+            ),
             DefaultTextField(text: 'Apellido', icon: Icons.person_outline, onChanged: (text) {
 
-            }, backgroundColor: Colors.grey[200]!),
+            },
+              backgroundColor: Colors.grey[200]!,
+              margin: EdgeInsets.only(left: 30, right: 30, top: 15),
+            ),
             DefaultTextField(text: 'Telefono', icon: Icons.phone, onChanged: (text) {
 
-            }, backgroundColor: Colors.grey[200]!),
+            },
+              backgroundColor: Colors.grey[200]!,
+              margin: EdgeInsets.only(left: 30, right: 30, top: 15),
+            ),
           ],
         ),
       ),
@@ -92,8 +103,8 @@ class ProfileUpdateContent extends StatelessWidget {
   Widget _headerProfile(BuildContext context) {
     return Container(
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 40),
-      height: MediaQuery.of(context).size.height * 0.35,
+      padding: EdgeInsets.only(top: 70),
+      height: MediaQuery.of(context).size.height * 0.4,
       width:
           MediaQuery.of(context).size.width, // or full width: double.infinity
       decoration: BoxDecoration(
@@ -107,7 +118,7 @@ class ProfileUpdateContent extends StatelessWidget {
         ),
       ),
       child: Text(
-        "PERFIL DE USUARIO",
+        "ACTUALIZAR PERFIL",
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
