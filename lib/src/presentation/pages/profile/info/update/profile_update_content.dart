@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:indriver_clone_flutter/src/domain/models/user.dart';
+import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 
-class ProfileInfoContent extends StatelessWidget {
-  User? user;
+class ProfileUpdateContent extends StatelessWidget {
 
-  ProfileInfoContent(this.user, {super.key});
+  const ProfileUpdateContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +14,7 @@ class ProfileInfoContent extends StatelessWidget {
           children: [
             _headerProfile(context),
             Spacer(),
-            _actionProfile("EDITAR PERFIL", Icons.edit, () {
-              Navigator.pushNamed(context, 'profile/update');
-            }),
-            _actionProfile("CERRAR SESION", Icons.settings_power, () {}),
+            _actionProfile("ACTUALIZAR USUARIO", Icons.check),
             SizedBox(height: 35),
           ],
         ),
@@ -52,43 +49,41 @@ class ProfileInfoContent extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              '${user?.name} ${user?.lastname}' ?? '',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Text(user?.email ?? '', style: TextStyle(color: Colors.grey[700])),
-            Text(user?.phone ?? '', style: TextStyle(color: Colors.grey[700])),
+            DefaultTextField(text: 'Nombre', icon: Icons.person, onChanged: (text) {
+              
+            }, backgroundColor: Colors.grey[200]!,),
+            DefaultTextField(text: 'Apellido', icon: Icons.person_outline, onChanged: (text) {
+
+            }, backgroundColor: Colors.grey[200]!),
+            DefaultTextField(text: 'Telefono', icon: Icons.phone, onChanged: (text) {
+
+            }, backgroundColor: Colors.grey[200]!),
           ],
         ),
       ),
     );
   }
 
-  // circular icon and styles
-  Widget _actionProfile(String option, IconData icon, Function() function) {
-    return GestureDetector(
-      onTap: () {
-        function();
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 10, right: 10, top: 15),
-        child: ListTile(
-          title: Text(option, style: TextStyle(fontWeight: FontWeight.bold)),
-          leading: Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color.fromARGB(255, 14, 29, 106),
-                  Color.fromARGB(255, 30, 112, 227),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(50),
+  // ciruclar icon and styles
+  Widget _actionProfile(String option, IconData icon) {
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10, top: 15),
+      child: ListTile(
+        title: Text(option, style: TextStyle(fontWeight: FontWeight.bold)),
+        leading: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color.fromARGB(255, 14, 29, 106),
+                Color.fromARGB(255, 30, 112, 227),
+              ],
             ),
-            child: Icon(icon, color: Colors.white),
+            borderRadius: BorderRadius.circular(50),
           ),
+          child: Icon(icon, color: Colors.white),
         ),
       ),
     );

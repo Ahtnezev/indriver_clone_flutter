@@ -6,13 +6,15 @@ class DefaultTextField extends StatelessWidget {
   final IconData icon;
   final EdgeInsetsGeometry margin;
   final String? Function(String?)? validator;
+  final Color backgroundColor;
 
   const DefaultTextField({
     required this.text,
     required this.icon,
     required this.onChanged,
     this.margin = const EdgeInsets.only(top: 50, left: 20, right: 20),
-    this.validator
+    this.validator,
+    this.backgroundColor = Colors.white
   });
 
   @override
@@ -21,7 +23,7 @@ class DefaultTextField extends StatelessWidget {
       height: 45,
       margin: margin,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(15),
           bottomRight: Radius.circular(15),
