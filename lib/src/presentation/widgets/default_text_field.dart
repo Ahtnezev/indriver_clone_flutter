@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class DefaultTextField extends StatelessWidget {
   final String text;
+  final String? initialValue;
   final Function(String text) onChanged;
   final IconData icon;
   final EdgeInsetsGeometry margin;
@@ -14,7 +15,8 @@ class DefaultTextField extends StatelessWidget {
     required this.onChanged,
     this.margin = const EdgeInsets.only(top: 50, left: 20, right: 20),
     this.validator,
-    this.backgroundColor = Colors.white
+    this.backgroundColor = Colors.white,
+    this.initialValue
   });
 
   @override
@@ -33,6 +35,7 @@ class DefaultTextField extends StatelessWidget {
         onChanged: (text) {
           onChanged(text);
         },
+        initialValue: initialValue,
         validator: validator,
         decoration: InputDecoration(
           label: Text(text),

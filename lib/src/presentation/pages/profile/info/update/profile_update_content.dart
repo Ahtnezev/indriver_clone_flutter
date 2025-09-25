@@ -3,8 +3,9 @@ import 'package:indriver_clone_flutter/src/domain/models/user.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 
 class ProfileUpdateContent extends StatelessWidget {
+  User? user;
 
-  const ProfileUpdateContent({super.key});
+  ProfileUpdateContent(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ProfileUpdateContent extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: 20, right: 20, top: 85),
       width: MediaQuery.of(context).size.width,
-      height: 320,
+      height: 540,
       child: Card(
         color: Colors.white,
         surfaceTintColor: Colors.white,
@@ -49,15 +50,27 @@ class ProfileUpdateContent extends StatelessWidget {
                 ),
               ),
             ),
+
             DefaultTextField(text: 'Nombre', icon: Icons.person, onChanged: (text) {
               
-            }, backgroundColor: Colors.grey[200]!,),
+            },
+              backgroundColor: Colors.grey[200]!,
+              initialValue: user?.name,
+            ),
+
             DefaultTextField(text: 'Apellido', icon: Icons.person_outline, onChanged: (text) {
 
-            }, backgroundColor: Colors.grey[200]!),
+            },
+              backgroundColor: Colors.grey[200]!,
+              initialValue: user?.lastname,
+            ),
+
             DefaultTextField(text: 'Telefono', icon: Icons.phone, onChanged: (text) {
 
-            }, backgroundColor: Colors.grey[200]!),
+            },
+              backgroundColor: Colors.grey[200]!,
+              initialValue: user?.phone,
+            ),
           ],
         ),
       ),
