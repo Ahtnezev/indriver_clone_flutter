@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indriver_clone_flutter/src/domain/models/user.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_bloc.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_event.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_state.dart';
+import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 
 class ProfileUpdateContent extends StatelessWidget {
   User? user;
+  ProfileUpdateState? state;
 
-  ProfileUpdateContent(this.user);
+  ProfileUpdateContent(this.state, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class ProfileUpdateContent extends StatelessWidget {
           children: [
             _headerProfile(context),
             Spacer(),
-            _actionProfile("ACTUALIZAR USUARIO", Icons.check),
+            _actionProfile(context, "ACTUALIZAR USUARIO", Icons.check),
             SizedBox(height: 35),
           ],
         ),
@@ -51,25 +57,49 @@ class ProfileUpdateContent extends StatelessWidget {
               ),
             ),
 
-            DefaultTextField(text: 'Nombre', icon: Icons.person, onChanged: (text) {
-              
-            },
+            DefaultTextField(
+              text: 'Nombre',
+              icon: Icons.person,
+              onChanged: (text) {
+                context.read<ProfileUpdateBloc>().add(
+                  NameChanged(name: BlocFormItem(value: text)),
+                );
+              },
               backgroundColor: Colors.grey[200]!,
               initialValue: user?.name,
+              validator: (value) {
+                return state?.name.error;
+              },
             ),
 
-            DefaultTextField(text: 'Apellido', icon: Icons.person_outline, onChanged: (text) {
-
-            },
+            DefaultTextField(
+              text: 'Apellido',
+              icon: Icons.person_outline,
+              onChanged: (text) {
+                context.read<ProfileUpdateBloc>().add(
+                  LastnameChanged(lastname: BlocFormItem(value: text)),
+                );
+              },
               backgroundColor: Colors.grey[200]!,
               initialValue: user?.lastname,
+              validator: (value) {
+                return state?.lastname.error;
+              },
             ),
 
-            DefaultTextField(text: 'Telefono', icon: Icons.phone, onChanged: (text) {
-
-            },
+            DefaultTextField(
+              text: 'Telefono',
+              icon: Icons.phone,
+              onChanged: (text) {
+                context.read<ProfileUpdateBloc>().add(
+                  PhoneChanged(phone: BlocFormItem(value: text)),
+                );
+              },
               backgroundColor: Colors.grey[200]!,
               initialValue: user?.phone,
+              validator: (value) {
+                return state?.phone.error;
+              },
             ),
           ],
         ),
@@ -78,25 +108,36 @@ class ProfileUpdateContent extends StatelessWidget {
   }
 
   // ciruclar icon and styles
-  Widget _actionProfile(String option, IconData icon) {
-    return Container(
-      margin: EdgeInsets.only(left: 10, right: 10, top: 15),
-      child: ListTile(
-        title: Text(option, style: TextStyle(fontWeight: FontWeight.bold)),
-        leading: Container(
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color.fromARGB(255, 14, 29, 106),
-                Color.fromARGB(255, 30, 112, 227),
-              ],
+  Widget _actionProfile(BuildContext context, String option, IconData icon) {
+    return GestureDetector(
+      onTap: () {
+        if (state!.formKey!.currentState != null) {
+          if (state!.formKey!.currentState!.validate()) {
+            context.read<ProfileUpdateBloc>().add(FormSubmit());
+          }
+        } else {
+          context.read<ProfileUpdateBloc>().add(FormSubmit());
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 10, right: 10, top: 15),
+        child: ListTile(
+          title: Text(option, style: TextStyle(fontWeight: FontWeight.bold)),
+          leading: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 14, 29, 106),
+                  Color.fromARGB(255, 30, 112, 227),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(50),
             ),
-            borderRadius: BorderRadius.circular(50),
+            child: Icon(icon, color: Colors.white),
           ),
-          child: Icon(icon, color: Colors.white),
         ),
       ),
     );
