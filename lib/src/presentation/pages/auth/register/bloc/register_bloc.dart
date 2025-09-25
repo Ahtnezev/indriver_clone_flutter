@@ -24,7 +24,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<NameChanged>((event, emit) {
       emit(
         state.copyWith(
-          name: BlogFormItem(
+          name: BlocFormItem(
             value: event.name.value,
             error: event.name.value.isEmpty ? 'Ingresa el nombre' : null,
           ),
@@ -36,7 +36,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<LastnameChanged>((event, emit) {
       emit(
         state.copyWith(
-          lastname: BlogFormItem(
+          lastname: BlocFormItem(
             value: event.lastname.value,
             error: event.lastname.value.isEmpty ? 'Ingresa el apellido' : null,
           ),
@@ -48,7 +48,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<EmailChanged>((event, emit) {
       emit(
         state.copyWith(
-          email: BlogFormItem(
+          email: BlocFormItem(
             value: event.email.value,
             error: event.email.value.isEmpty ? 'Ingresa el correo' : null,
           ),
@@ -60,7 +60,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<PhoneChanged>((event, emit) {
       emit(
         state.copyWith(
-          phone: BlogFormItem(
+          phone: BlocFormItem(
             value: event.phone.value,
             error: event.phone.value.isEmpty ? 'Ingresa el telefono' : null,
           ),
@@ -72,7 +72,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<PasswordChanged>((event, emit) {
       emit(
         state.copyWith(
-          password: BlogFormItem(
+          password: BlocFormItem(
             value: event.password.value,
             error: event.password.value.isEmpty
               ? 'Ingresa el password'
@@ -88,7 +88,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<PasswordConfirmChanged>((event, emit) {
       emit(
         state.copyWith(
-          passwordConfirm: BlogFormItem(
+          passwordConfirm: BlocFormItem(
             value: event.passwordConfirm.value,
             error: event.passwordConfirm.value.isEmpty
               ? 'Confirma el password'

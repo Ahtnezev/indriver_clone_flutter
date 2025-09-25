@@ -1,21 +1,21 @@
 
 
-class BlogFormItem {
+class BlocFormItem {
 
   final String value;
   final String? error;
 
-  const BlogFormItem({
+  const BlocFormItem({
     this.value = '',
     this.error,
   });
 
 
-  BlogFormItem copyWith({
+  BlocFormItem copyWith({
     String? value,
     String? error
   }) {
-    return BlogFormItem(
+    return BlocFormItem(
       value: value ?? this.value,
       error: error ?? this.error
     );

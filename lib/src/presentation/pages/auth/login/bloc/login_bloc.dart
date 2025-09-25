@@ -35,7 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<EmailChanged>((event, emit) {
       emit(
         state.copyWith(
-          email: BlogFormItem(
+          email: BlocFormItem(
             value: event.email.value,
             error: event.email.value.isEmpty ? 'Ingresa el email' : null
             ),
@@ -46,7 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     on<PasswordChanged>((event, emit) {
       emit(state.copyWith(
-        password: BlogFormItem(
+          password: BlocFormItem(
           value: event.password.value,
           error: event.password.value.isEmpty
             ? 'Ingresa el password'
