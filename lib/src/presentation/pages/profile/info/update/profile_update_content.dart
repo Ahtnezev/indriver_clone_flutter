@@ -22,7 +22,7 @@ class ProfileUpdateContent extends StatelessWidget {
           children: [
             _headerProfile(context),
             Spacer(),
-            _actionProfile("ACTUALIZAR USUARIO", Icons.check),
+            _actionProfile(context, "ACTUALIZAR USUARIO", Icons.check),
             SizedBox(height: 35),
           ],
         ),
@@ -76,8 +76,8 @@ class ProfileUpdateContent extends StatelessWidget {
   Widget _actionProfile(BuildContext context, String option, IconData icon) {
     return GestureDetector(
       onTap: () {
-        if (state!.formKey!.currentState != null) {
-          if (state!.formKey!.currentState!.validate()) {
+        if (state.formKey!.currentState != null) {
+          if (state.formKey!.currentState!.validate()) {
             context.read<ProfileUpdateBloc>().add(FormSubmit());
           }
         } else {
