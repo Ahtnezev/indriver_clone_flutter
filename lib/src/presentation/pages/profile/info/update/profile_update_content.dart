@@ -5,6 +5,7 @@ import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/updat
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
+import 'package:indriver_clone_flutter/src/presentation/utils/gallery_or_photo_dialog.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 
 class ProfileUpdateContent extends StatelessWidget {
@@ -33,6 +34,37 @@ class ProfileUpdateContent extends StatelessWidget {
     );
   }
 
+  Widget _imageUser(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        GalleryOrPhotoDialog(
+          context,
+          () => {context.read<ProfileUpdateBloc>().add(PickImage())},
+          () => {context.read<ProfileUpdateBloc>().add(TakePhoto())},
+        );
+      },
+      child: Container(
+        width: 115,
+        margin: EdgeInsets.only(top: 15, bottom: 15),
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: ClipOval(
+            child:
+                state.image != null
+                    ? Image.file(state.image!, fit: BoxFit.cover)
+                    : FadeInImage.assetNetwork(
+                      placeholder: "assets/img/my_user.png",
+                      image:
+                          "https://e7.pngegg.com/pngimages/552/1/png-clipart-dogs-dogs-thumbnail.png",
+                      fit: BoxFit.cover,
+                      fadeInDuration: Duration(seconds: 1),
+                    ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _cardUserInfo(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 20, right: 20, top: 85),
@@ -43,22 +75,7 @@ class ProfileUpdateContent extends StatelessWidget {
         surfaceTintColor: Colors.white,
         child: Column(
           children: [
-            Container(
-              width: 115,
-              margin: EdgeInsets.only(top: 15, bottom: 15),
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: ClipOval(
-                  child: FadeInImage.assetNetwork(
-                    placeholder: "assets/img/my_user.png",
-                    image:
-                        "https://e7.pngegg.com/pngimages/552/1/png-clipart-dogs-dogs-thumbnail.png",
-                    fit: BoxFit.cover,
-                    fadeInDuration: Duration(seconds: 1),
-                  ),
-                ),
-              ),
-            ),
+            _imageUser(context),
 
             DefaultTextField(
               text: 'Nombre',

@@ -1,7 +1,10 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:indriver_clone_flutter/src/domain/models/auth_response.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/users/users_use_cases.dart';
@@ -40,6 +43,32 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
 
     on<PhoneChanged>((event, emit) {
       emit(state.copyWith(phone: BlocFormItem(value: event.phone.value, error: event.phone.value.isEmpty ? 'Phone cannot be empty' : null), formKey: formKey));
+    });
+
+    on<PickImage>((event, emit) async {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(
+        source: ImageSource.gallery,
+      ); // file
+      if (image != null) {
+        // user has a selection in gallery
+        //~ we do a state change
+        emit(
+          state.copyWith(
+            image: File(image.path),
+            formKey:
+                formKey, // this doesnt allow lost the change state (avoid restart form)
+          ),
+        );
+      }
+    });
+
+    on<TakePhoto>((event, emit) async {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        emit(state.copyWith(image: File(image.path), formKey: formKey));
+      }
     });
 
     on<UpdateUserSession>((event, emit) async {
