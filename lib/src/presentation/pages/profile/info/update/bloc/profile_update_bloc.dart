@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indriver_clone_flutter/src/domain/models/auth_response.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/auth/auth_use_cases.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/users/users_use_cases.dart';
 import 'package:indriver_clone_flutter/src/domain/utils/resource.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_event.dart';
@@ -10,10 +12,12 @@ import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dar
 
 class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
 
+  AuthUseCases authUseCases;
   UsersUseCases usersUseCases;
   final formKey = GlobalKey<FormState>();
 
-  ProfileUpdateBloc(this.usersUseCases) : super(ProfileUpdateState()) {
+  ProfileUpdateBloc(this.usersUseCases, this.authUseCases)
+    : super(ProfileUpdateState()) {
     
     on<ProfileUpdateInitEvent>((event, emit) {
       emit(state.copyWith(
@@ -36,6 +40,16 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
 
     on<PhoneChanged>((event, emit) {
       emit(state.copyWith(phone: BlocFormItem(value: event.phone.value, error: event.phone.value.isEmpty ? 'Phone cannot be empty' : null), formKey: formKey));
+    });
+
+    on<UpdateUserSession>((event, emit) async {
+      AuthResponse authResponse = await authUseCases.getUserSession.run();
+      authResponse.user.name = event.user.name;
+      authResponse.user.lastname = event.user.lastname;
+      authResponse.user.phone = event.user.phone;
+      authResponse.user.image = event.user.image;
+
+      await authUseCases.saveUserSession.run(authResponse);
     });
 
     on<FormSubmit>((event, emit) async {

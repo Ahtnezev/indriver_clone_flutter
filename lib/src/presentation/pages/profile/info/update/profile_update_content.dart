@@ -9,24 +9,27 @@ import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_fie
 
 class ProfileUpdateContent extends StatelessWidget {
   User? user;
-  ProfileUpdateState? state;
+  ProfileUpdateState state;
 
-  ProfileUpdateContent(this.state, this.user);
+  ProfileUpdateContent(this.state, this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Column(
-          children: [
-            _headerProfile(context),
-            Spacer(),
-            _actionProfile(context, "ACTUALIZAR USUARIO", Icons.check),
-            SizedBox(height: 35),
-          ],
-        ),
-        _cardUserInfo(context),
-      ],
+    return Form(
+      key: state.formKey, //* keep changes state
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              _headerProfile(context),
+              Spacer(),
+              _actionProfile(context, "ACTUALIZAR USUARIO", Icons.check),
+              SizedBox(height: 35),
+            ],
+          ),
+          _cardUserInfo(context),
+        ],
+      ),
     );
   }
 
