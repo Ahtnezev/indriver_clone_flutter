@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indriver_clone_flutter/src/domain/models/user.dart';
-import 'package:indriver_clone_flutter/src/presentation/widgets/default_icon_back.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_bloc.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_event.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/bloc/profile_update_state.dart';
+import 'package:indriver_clone_flutter/src/presentation/utils/blog_form_item.dart';
+import 'package:indriver_clone_flutter/src/presentation/utils/gallery_or_photo_dialog.dart';
 import 'package:indriver_clone_flutter/src/presentation/widgets/default_text_field.dart';
 
 class ProfileUpdateContent extends StatelessWidget {
+  User? user;
+  ProfileUpdateState state;
 
-  const ProfileUpdateContent({super.key});
+  ProfileUpdateContent(this.state, this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,6 @@ class ProfileUpdateContent extends StatelessWidget {
           ],
         ),
         _cardUserInfo(context),
-        DefaultIconBack(margin: EdgeInsets.only(top: 60, left: 30))
       ],
     );
   }
@@ -29,7 +35,7 @@ class ProfileUpdateContent extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(left: 20, right: 20, top: 120),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: 320,
       child: Card(
         color: Colors.white,
         surfaceTintColor: Colors.white,
@@ -53,22 +59,13 @@ class ProfileUpdateContent extends StatelessWidget {
             ),
             DefaultTextField(text: 'Nombre', icon: Icons.person, onChanged: (text) {
               
-            },
-              backgroundColor: Colors.grey[200]!,
-              margin: EdgeInsets.only(left: 30, right: 30, top: 15),
-            ),
+            }, backgroundColor: Colors.grey[200]!,),
             DefaultTextField(text: 'Apellido', icon: Icons.person_outline, onChanged: (text) {
 
-            },
-              backgroundColor: Colors.grey[200]!,
-              margin: EdgeInsets.only(left: 30, right: 30, top: 15),
-            ),
+            }, backgroundColor: Colors.grey[200]!),
             DefaultTextField(text: 'Telefono', icon: Icons.phone, onChanged: (text) {
 
-            },
-              backgroundColor: Colors.grey[200]!,
-              margin: EdgeInsets.only(left: 30, right: 30, top: 15),
-            ),
+            }, backgroundColor: Colors.grey[200]!),
           ],
         ),
       ),
@@ -76,25 +73,36 @@ class ProfileUpdateContent extends StatelessWidget {
   }
 
   // ciruclar icon and styles
-  Widget _actionProfile(String option, IconData icon) {
-    return Container(
-      margin: EdgeInsets.only(left: 10, right: 10, top: 15),
-      child: ListTile(
-        title: Text(option, style: TextStyle(fontWeight: FontWeight.bold)),
-        leading: Container(
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color.fromARGB(255, 14, 29, 106),
-                Color.fromARGB(255, 30, 112, 227),
-              ],
+  Widget _actionProfile(BuildContext context, String option, IconData icon) {
+    return GestureDetector(
+      onTap: () {
+        if (state!.formKey!.currentState != null) {
+          if (state!.formKey!.currentState!.validate()) {
+            context.read<ProfileUpdateBloc>().add(FormSubmit());
+          }
+        } else {
+          context.read<ProfileUpdateBloc>().add(FormSubmit());
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 10, right: 10, top: 15),
+        child: ListTile(
+          title: Text(option, style: TextStyle(fontWeight: FontWeight.bold)),
+          leading: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 14, 29, 106),
+                  Color.fromARGB(255, 30, 112, 227),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(50),
             ),
-            borderRadius: BorderRadius.circular(50),
+            child: Icon(icon, color: Colors.white),
           ),
-          child: Icon(icon, color: Colors.white),
         ),
       ),
     );

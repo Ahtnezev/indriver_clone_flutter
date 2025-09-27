@@ -9,37 +9,37 @@ class RegisterInitEvent extends RegisterEvent {}
 
 
 class NameChanged extends RegisterInitEvent {
-  final BlogFormItem name;
+  final BlocFormItem name;
 
   NameChanged({required this.name});
 }
 
 class LastnameChanged extends RegisterInitEvent {
-  final BlogFormItem lastname;
+  final BlocFormItem lastname;
 
   LastnameChanged({required this.lastname});
 }
 
 class EmailChanged extends RegisterInitEvent {
-  final BlogFormItem email;
+  final BlocFormItem email;
 
   EmailChanged({required this.email});
 }
 
 class PhoneChanged extends RegisterInitEvent {
-  final BlogFormItem phone;
+  final BlocFormItem phone;
 
   PhoneChanged({required this.phone});
 }
 
 class PasswordChanged extends RegisterInitEvent {
-  final BlogFormItem password;
+  final BlocFormItem password;
 
   PasswordChanged({required this.password});
 }
 
 class PasswordConfirmChanged extends RegisterInitEvent {
-  final BlogFormItem passwordConfirm;
+  final BlocFormItem passwordConfirm;
 
   PasswordConfirmChanged({required this.passwordConfirm});
 }

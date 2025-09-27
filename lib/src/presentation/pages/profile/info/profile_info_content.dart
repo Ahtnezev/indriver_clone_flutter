@@ -15,7 +15,8 @@ class ProfileInfoContent extends StatelessWidget {
             _headerProfile(context),
             Spacer(),
             _actionProfile("EDITAR PERFIL", Icons.edit, () {
-              Navigator.pushNamed(context, 'profile/update');
+              // arguments: to send data to another page
+              Navigator.pushNamed(context, 'profile/update', arguments: user);
             }),
             _actionProfile("CERRAR SESION", Icons.settings_power, () {}),
             SizedBox(height: 35),
@@ -53,7 +54,7 @@ class ProfileInfoContent extends StatelessWidget {
               ),
             ),
             Text(
-              '${user?.name} ${user?.lastname}' ?? '',
+              '${user?.name} ${user?.lastname}', // ?? ''
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(user?.email ?? '', style: TextStyle(color: Colors.grey[700])),

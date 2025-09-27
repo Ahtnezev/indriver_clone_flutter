@@ -9,12 +9,12 @@ class LoginInitEvent extends LoginEvent {}
 
 // capturar cambios en los campos 
 class EmailChanged extends LoginEvent{
-  final BlogFormItem email;
+  final BlocFormItem email;
   EmailChanged({required this.email });
 }
 
 class PasswordChanged extends LoginEvent{
-  final BlogFormItem password;
+  final BlocFormItem password;
   PasswordChanged({required this.password });
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class DefaultTextField extends StatelessWidget {
   final String text;
+  final String? initialValue;
   final Function(String text) onChanged;
   final IconData icon;
   final EdgeInsetsGeometry margin;
@@ -12,15 +13,16 @@ class DefaultTextField extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.onChanged,
-    this.margin = const EdgeInsets.only(top: 50, left: 20, right: 20),
+    this.margin = const EdgeInsets.only(top: 25, left: 20, right: 20),
     this.validator,
-    this.backgroundColor = Colors.white
+    this.backgroundColor = Colors.white,
+    this.initialValue
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 45,
+      height: 50,
       margin: margin,
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -33,9 +35,11 @@ class DefaultTextField extends StatelessWidget {
         onChanged: (text) {
           onChanged(text);
         },
+        style: TextStyle(fontSize: 13),
+        initialValue: initialValue,
         validator: validator,
         decoration: InputDecoration(
-          label: Text(text),
+          label: Text(text, style: TextStyle(fontSize: 13)),
           border: InputBorder.none,
           prefixIcon: Container(
             margin: EdgeInsets.only(top: 10),

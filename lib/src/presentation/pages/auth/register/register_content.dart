@@ -73,7 +73,9 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.person_outline,
                         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(NameChanged(name: BlogFormItem(value: text)));
+                          context.read<RegisterBloc>().add(
+                            NameChanged(name: BlocFormItem(value: text)),
+                          );
                         },
                         validator: (value) {
                           return state.name.error;
@@ -84,7 +86,11 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.person_2_outlined,
                         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(LastnameChanged(lastname: BlogFormItem(value: text)));
+                          context.read<RegisterBloc>().add(
+                            LastnameChanged(
+                              lastname: BlocFormItem(value: text),
+                            ),
+                          );
                         },
                         validator: (value) {
                           return state.lastname.error;
@@ -95,7 +101,9 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.email_outlined,
                         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(EmailChanged(email: BlogFormItem(value: text)));
+                          context.read<RegisterBloc>().add(
+                            EmailChanged(email: BlocFormItem(value: text)),
+                          );
                         },
                         validator: (value) {
                           return state.email.error;
@@ -106,7 +114,9 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.phone_outlined,
                         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(PhoneChanged(phone: BlogFormItem(value: text)));
+                          context.read<RegisterBloc>().add(
+                            PhoneChanged(phone: BlocFormItem(value: text)),
+                          );
                         },
                         validator: (value) {
                           return state.phone.error;
@@ -117,7 +127,11 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.lock_outline,
                         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(PasswordChanged(password: BlogFormItem(value: text)));
+                          context.read<RegisterBloc>().add(
+                            PasswordChanged(
+                              password: BlocFormItem(value: text),
+                            ),
+                          );
                         },
                         validator: (value) {
                           return state.password.error;
@@ -128,7 +142,11 @@ class RegisterContent extends StatelessWidget {
                         icon: Icons.lock_outline,
                         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
                         onChanged: (text) {
-                          context.read<RegisterBloc>().add(PasswordConfirmChanged(passwordConfirm: BlogFormItem(value: text)));
+                          context.read<RegisterBloc>().add(
+                            PasswordConfirmChanged(
+                              passwordConfirm: BlocFormItem(value: text),
+                            ),
+                          );
                         },
                         validator: (value) {
                           return state.passwordConfirm.error;
