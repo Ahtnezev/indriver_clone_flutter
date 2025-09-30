@@ -8,6 +8,8 @@ import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/regi
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/client_home_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/profile_update_page.dart';
 
+// to continue the course, we need go to: https://cloud.google.com/maps-platform/ and enable Maps SDK for Android and Maps SDK for iOS
+// needs credit card:p
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();

@@ -55,7 +55,7 @@ class ProfileUpdateContent extends StatelessWidget {
                     : FadeInImage.assetNetwork(
                       placeholder: "assets/img/my_user.png",
                       image:
-                          "https://e7.pngegg.com/pngimages/552/1/png-clipart-dogs-dogs-thumbnail.png",
+                          user!.image!,
                       fit: BoxFit.cover,
                       fadeInDuration: Duration(seconds: 1),
                     ),
@@ -88,7 +88,7 @@ class ProfileUpdateContent extends StatelessWidget {
               backgroundColor: Colors.grey[200]!,
               initialValue: user?.name,
               validator: (value) {
-                return state?.name.error;
+                return state.name.error;
               },
             ),
 
@@ -103,7 +103,7 @@ class ProfileUpdateContent extends StatelessWidget {
               backgroundColor: Colors.grey[200]!,
               initialValue: user?.lastname,
               validator: (value) {
-                return state?.lastname.error;
+                return state.lastname.error;
               },
             ),
 
@@ -118,7 +118,7 @@ class ProfileUpdateContent extends StatelessWidget {
               backgroundColor: Colors.grey[200]!,
               initialValue: user?.phone,
               validator: (value) {
-                return state?.phone.error;
+                return state.phone.error;
               },
             ),
           ],
