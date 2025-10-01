@@ -4,6 +4,7 @@ import 'package:indriver_clone_flutter/main.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_state.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/client_map_seeker_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/profile_info_page.dart';
 
 class ClientHomePage extends StatefulWidget {
@@ -14,7 +15,7 @@ class ClientHomePage extends StatefulWidget {
 }
 
 class _ClientHomePageState extends State<ClientHomePage> {
-  List<Widget> pageList = <Widget>[ProfileInfoPage()];
+  List<Widget> pageList = <Widget>[ClientMapSeekerPage(), ProfileInfoPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +44,27 @@ class _ClientHomePageState extends State<ClientHomePage> {
                   ),
                 ),
 
-                // to use pageIndex we need to access, needs envolve Drawer in a BlocBuilder...
+                
                 ListTile(
-                  title: Text("Perfil del usuario"),
+                  title: Text("Mapa de busqueda"),
                   selected: state.pageIndex == 0,
                   onTap: () {
                     context.read<ClientHomeBloc>().add(
                       ChangeDrawerPage(pageIndex: 0),
+                    );
+                    Navigator.pop(
+                      context,
+                    ); // redirect when user click in item of menu from drawer
+                  },
+                ),
+
+                // to use pageIndex we need to access, needs envolve Drawer in a BlocBuilder...
+                ListTile(
+                  title: Text("Perfil del usuario"),
+                  selected: state.pageIndex == 1,
+                  onTap: () {
+                    context.read<ClientHomeBloc>().add(
+                      ChangeDrawerPage(pageIndex: 1),
                     );
                     Navigator.pop(
                       context,

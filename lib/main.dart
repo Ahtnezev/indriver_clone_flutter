@@ -10,6 +10,7 @@ import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/updat
 
 // to continue the course, we need go to: https://cloud.google.com/maps-platform/ and enable Maps SDK for Android and Maps SDK for iOS
 // needs credit card:p
+// Video 67: Seccion 10 Google Maps, min 4:30
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
