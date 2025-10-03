@@ -43,13 +43,15 @@ class ProfileInfoContent extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1,
                 child: ClipOval(
-                  child: FadeInImage.assetNetwork(
-                    placeholder: "assets/img/my_user.png",
-                    image:
-                        "https://e7.pngegg.com/pngimages/552/1/png-clipart-dogs-dogs-thumbnail.png",
-                    fit: BoxFit.cover,
-                    fadeInDuration: Duration(seconds: 1),
-                  ),
+                  child:
+                      user != null
+                          ? FadeInImage.assetNetwork(
+                            placeholder: "assets/img/my_user.png",
+                            image: user!.image!,
+                            fit: BoxFit.cover,
+                            fadeInDuration: Duration(seconds: 1),
+                          )
+                          : Container(),
                 ),
               ),
             ),
