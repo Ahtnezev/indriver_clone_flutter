@@ -16,21 +16,18 @@ class ProfileUpdateContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: state.formKey, //* keep changes state
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              _headerProfile(context),
-              Spacer(),
-              _actionProfile(context, "ACTUALIZAR USUARIO", Icons.check),
-              SizedBox(height: 35),
-            ],
-          ),
-          _cardUserInfo(context),
-        ],
-      ),
+    return Stack(
+      children: [
+        Column(
+          children: [
+            _headerProfile(context),
+            Spacer(),
+            _actionProfile(context, "ACTUALIZAR USUARIO", Icons.check),
+            SizedBox(height: 35),
+          ],
+        ),
+        _cardUserInfo(context),
+      ],
     );
   }
 
@@ -131,8 +128,8 @@ class ProfileUpdateContent extends StatelessWidget {
   Widget _actionProfile(BuildContext context, String option, IconData icon) {
     return GestureDetector(
       onTap: () {
-        if (state!.formKey!.currentState != null) {
-          if (state!.formKey!.currentState!.validate()) {
+        if (state.formKey!.currentState != null) {
+          if (state.formKey!.currentState!.validate()) {
             context.read<ProfileUpdateBloc>().add(FormSubmit());
           }
         } else {
@@ -166,8 +163,8 @@ class ProfileUpdateContent extends StatelessWidget {
   Widget _headerProfile(BuildContext context) {
     return Container(
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.only(top: 40),
-      height: MediaQuery.of(context).size.height * 0.35,
+      padding: EdgeInsets.only(top: 70),
+      height: MediaQuery.of(context).size.height * 0.4,
       width:
           MediaQuery.of(context).size.width, // or full width: double.infinity
       decoration: BoxDecoration(
@@ -181,7 +178,7 @@ class ProfileUpdateContent extends StatelessWidget {
         ),
       ),
       child: Text(
-        "PERFIL DE USUARIO",
+        "ACTUALIZAR PERFIL",
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
