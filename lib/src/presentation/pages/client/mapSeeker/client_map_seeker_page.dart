@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_bloc.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_state.dart';
 
 //! google maps keys missin in files android/ios
@@ -16,9 +17,6 @@ class ClientMapSeekerPage extends StatefulWidget {
 }
 
 class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -32,6 +30,15 @@ class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    //^ wait until the blocbuilder finish load all elements
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<ClientMapSeekerBloc>().add(FindPosition());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<ClientMapSeekerBloc, ClientMapSeekerState>(
@@ -40,21 +47,12 @@ class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
             onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
+              state.controller?.complete(controller);
             },
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
 }

@@ -49,6 +49,6 @@ List<BlocProvider> blocProviders = [
     create:
         (context) =>
             ClientMapSeekerBloc(locator<GeolocatorUseCases>())
-              ..add(FindPosition()),
+              ..add(CLientMapSeekerInitEvent()),
   ),
 ];

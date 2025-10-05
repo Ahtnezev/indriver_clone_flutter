@@ -1,21 +1,51 @@
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/geolocator_use_cases.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_state.dart';
 
 class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerState> {
   GeolocatorUseCases geolocatorUseCases;
+  final Completer<GoogleMapController> controller =
+      Completer<GoogleMapController>();
 
   // probably we have a error with this google maps package, ensure to do: flutter clean command and review build.gradle in kotlin version, and console
   ClientMapSeekerBloc(this.geolocatorUseCases) : super(ClientMapSeekerState()) {
+    on<CLientMapSeekerInitEvent>((event, emit) {
+      emit(state.copyWith(controller: controller));
+    });
     on<FindPosition>((event, emit) async {
       Position position = await geolocatorUseCases.findPosition.run();
-      emit(state.copyWith(position: position));
+      
+      emit(state.copyWith(position: position, controller: controller));
+
+      //!
+      add(
+        ChangeMapCameraPosition(
+          lat: position.latitude,
+          lng: position.longitude,
+        ),
+      );
+
       debugPrint("Position Lat: ${position.latitude}");
       debugPrint("Position Lon: ${position.longitude}");
+    });
+
+    on<ChangeMapCameraPosition>((event, emit) async {
+      GoogleMapController googleMapController = await state.controller!.future;
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(event.lat, event.lng),
+            zoom: 13,
+            bearing: 0,
+          ),
+        ),
+      );
     });
   }
 
