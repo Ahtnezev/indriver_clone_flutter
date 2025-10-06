@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/geolocator_use_cases.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_state.dart';
@@ -63,6 +64,19 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
             bearing: 0,
           ),
         ),
+      );
+    });
+
+    on<OnCameraMove>((event, emit) {
+      emit(
+        state.copyWith(cameraPosition: event.cameraPosition)
+      );
+    });
+
+    on<OnCameraIdle>((event, emit) async {
+      PlacemarkData placemarkData = await geolocatorUseCases.getPlacemarkData.run(state.cameraPosition);
+      emit(
+        state.copyWith(placemarkData: placemarkData)
       );
     });
   }

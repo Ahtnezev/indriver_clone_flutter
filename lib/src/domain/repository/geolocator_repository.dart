@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 
 abstract class GeolocatorRepository {
 
@@ -13,4 +14,5 @@ abstract class GeolocatorRepository {
     String content,
     BitmapDescriptor imageMarker,
   );
+  Future<PlacemarkData?> getPlacemarkData(CameraPosition cameraPosition);
 }

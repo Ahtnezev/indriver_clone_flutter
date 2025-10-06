@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_state.dart';
@@ -20,11 +16,6 @@ class ClientMapSeekerPage extends StatefulWidget {
 }
 
 class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
 
   TextEditingController pickUpController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
@@ -48,8 +39,15 @@ class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
             children: [
               GoogleMap(
                 mapType: MapType.normal,
-                initialCameraPosition: _kGooglePlex,
+                initialCameraPosition: state.cameraPosition,
                 markers: Set<Marker>.of(state.markers.values),
+                onCameraMove: (CameraPosition cameraPosition) {
+                  context.read<ClientMapSeekerBloc>().add(OnCameraMove(cameraPosition: cameraPosition));
+                },
+                onCameraIdle: ()async {
+                  context.read<ClientMapSeekerBloc>().add(OnCameraIdle());
+                  pickUpController.text = state.placemarkData?.address ?? '';
+                },
                 onMapCreated: (GoogleMapController controller) {
                   //? set a style dark, more: https://mapstyle.withgoogle.com/
                   //! important: remove spaces from json: https://codebeautify.org/remove-extra-spaces
@@ -67,6 +65,15 @@ class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
                   child: Column(
                     children: [
                       GooglePlacesAutoComplete(pickUpController, "Recoger en", (prediction) {
+                        if (prediction != null) {
+                          context.read<ClientMapSeekerBloc>().add(
+                            ChangeMapCameraPosition(
+                              lat: double.parse(prediction.lat!),
+                              lng: double.parse(prediction.lng!)
+                            )
+                          );
+                        }
+
                         debugPrint("Recoger en Lat: ${prediction.lat}");
                         debugPrint("Recoger en Lng: ${prediction.lng}");
                       }),

@@ -18,6 +18,7 @@ import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/create_mar
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/find_position_use_case.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/geolocator_use_cases.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/get_marker_use_case.dart';
+import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/get_placemark_data_use_case.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/users/update_user_use_case.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/users/users_use_cases.dart';
 import 'package:injectable/injectable.dart';
@@ -75,7 +76,8 @@ abstract class AppModule {
   GeolocatorUseCases get geolocatorUseCases => GeolocatorUseCases(
     findPosition: FindPositionUseCase(geolocatorRepository),
     createMarker: CreateMarkerUseCase(geolocatorRepository),
-    getMarker: GetMarkerUseCase(geolocatorRepository)
+    getMarker: GetMarkerUseCase(geolocatorRepository),
+    getPlacemarkData: GetPlacemarkDataUseCase(geolocatorRepository)
   );
 
   // we need to rebuild injectable file: injection.config.dart
