@@ -10,12 +10,11 @@ import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/b
 
 class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerState> {
   GeolocatorUseCases geolocatorUseCases;
-  final Completer<GoogleMapController> controller =
-      Completer<GoogleMapController>();
 
   // probably we have a error with this google maps package, ensure to do: flutter clean command and review build.gradle in kotlin version, and console
   ClientMapSeekerBloc(this.geolocatorUseCases) : super(ClientMapSeekerState()) {
     on<CLientMapSeekerInitEvent>((event, emit) {
+      final Completer<GoogleMapController> controller = Completer<GoogleMapController>();
       emit(state.copyWith(controller: controller));
     });
     on<FindPosition>((event, emit) async {
@@ -29,25 +28,24 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
         ),
       );
 
-      BitmapDescriptor imageMarker = await geolocatorUseCases.createMarker.run(
-        "assets/img/location_blue.png",
-      );
-      Marker marker = geolocatorUseCases.getMarker.run(
-        'MyLocation',
-        position.latitude,
-        position.longitude,
-        'Mi posicion',
-        '',
-        imageMarker,
-      );
+      // BitmapDescriptor imageMarker = await geolocatorUseCases.createMarker.run(
+      //   "assets/img/location_blue.png",
+      // );
+      // Marker marker = geolocatorUseCases.getMarker.run(
+      //   'MyLocation',
+      //   position.latitude,
+      //   position.longitude,
+      //   'Mi posicion',
+      //   '',
+      //   imageMarker,
+      // );
 
       emit(
         state.copyWith(
           position: position,
-          markers: {
-            marker.markerId: marker,
-          },
-          controller: controller
+          // markers: {
+          //   marker.markerId: marker,
+          // },
         )
       );
 
@@ -57,7 +55,7 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
 
     on<ChangeMapCameraPosition>((event, emit) async {
       GoogleMapController googleMapController = await state.controller!.future;
-      googleMapController.animateCamera(
+      await googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(event.lat, event.lng),

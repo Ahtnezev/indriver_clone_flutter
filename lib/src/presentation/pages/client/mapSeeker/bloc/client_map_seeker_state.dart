@@ -23,11 +23,11 @@ class ClientMapSeekerState extends Equatable {
     return ClientMapSeekerState(
       position: position ?? this.position,
       markers: markers ?? this.markers,
-      controller: controller,
+      controller: controller ?? this.controller,
     );
   }
 
   @override
-  List<Object?> get props => [position, markers];
+  List<Object?> get props => [position, markers, controller];
 
 }
