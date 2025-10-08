@@ -4,25 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/geolocator_use_cases.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_state.dart';
 
 class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerState> {
   GeolocatorUseCases geolocatorUseCases;
-  final Completer<GoogleMapController> controller =
-      Completer<GoogleMapController>();
 
   // probably we have a error with this google maps package, ensure to do: flutter clean command and review build.gradle in kotlin version, and console
   ClientMapSeekerBloc(this.geolocatorUseCases) : super(ClientMapSeekerState()) {
     on<CLientMapSeekerInitEvent>((event, emit) {
+      final Completer<GoogleMapController> controller = Completer<GoogleMapController>();
       emit(state.copyWith(controller: controller));
     });
     on<FindPosition>((event, emit) async {
       Position position = await geolocatorUseCases.findPosition.run();
       
-      emit(state.copyWith(position: position, controller: controller));
-
       //!
       add(
         ChangeMapCameraPosition(
@@ -31,13 +29,34 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
         ),
       );
 
+      // BitmapDescriptor imageMarker = await geolocatorUseCases.createMarker.run(
+      //   "assets/img/location_blue.png",
+      // );
+      // Marker marker = geolocatorUseCases.getMarker.run(
+      //   'MyLocation',
+      //   position.latitude,
+      //   position.longitude,
+      //   'Mi posicion',
+      //   '',
+      //   imageMarker,
+      // );
+
+      emit(
+        state.copyWith(
+          position: position,
+          // markers: {
+          //   marker.markerId: marker,
+          // },
+        )
+      );
+
       debugPrint("Position Lat: ${position.latitude}");
       debugPrint("Position Lon: ${position.longitude}");
     });
 
     on<ChangeMapCameraPosition>((event, emit) async {
       GoogleMapController googleMapController = await state.controller!.future;
-      googleMapController.animateCamera(
+      await googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(event.lat, event.lng),
@@ -45,6 +64,31 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
             bearing: 0,
           ),
         ),
+      );
+    });
+
+    on<OnCameraMove>((event, emit) {
+      emit(
+        state.copyWith(cameraPosition: event.cameraPosition)
+      );
+    });
+
+    on<OnCameraIdle>((event, emit) async {
+      PlacemarkData placemarkData = await geolocatorUseCases.getPlacemarkData.run(state.cameraPosition);
+      emit(
+        state.copyWith(placemarkData: placemarkData)
+      );
+    });
+
+    on<OnAutocompletePickUpSelected>((event, emit) {
+      emit(
+        state.copyWith(pickUpLatLng: LatLng(event.lat, event.lng))
+      );
+    });
+
+    on<OnAutocompleteDestionationSelected>((event, emit) {
+      emit(
+        state.copyWith(destionationLatLng: LatLng(event.lat, event.lng))
       );
     });
   }

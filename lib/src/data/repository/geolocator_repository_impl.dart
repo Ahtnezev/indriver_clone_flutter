@@ -1,7 +1,9 @@
-
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geolocator_platform_interface/src/models/position.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 import 'package:indriver_clone_flutter/src/domain/repository/geolocator_repository.dart';
 
 class GeolocatorRepositoryImpl implements GeolocatorRepository {
@@ -32,6 +34,60 @@ class GeolocatorRepositoryImpl implements GeolocatorRepository {
     } 
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  @override
+  Future<BitmapDescriptor> createMarkerFromAsset(String path) async {
+    ImageConfiguration configuration = ImageConfiguration();
+    // just in case change by: fromAssetImage -> asset
+    BitmapDescriptor descriptor = await BitmapDescriptor.fromAssetImage(
+      configuration,
+      path,
+    );
+    return descriptor;
+  }
+
+  @override
+  Marker getMarker(
+    String markerId,
+    double lat,
+    double lng,
+    String title,
+    String content,
+    BitmapDescriptor imageMarker,
+  ) {
+    MarkerId id = MarkerId(markerId);
+    Marker marker = Marker(
+      markerId: id,
+      icon: imageMarker,
+      position: LatLng(lat, lng),
+      infoWindow: InfoWindow(title: title, snippet: content),
+    );
+    return marker;
+  }
+
+  @override
+  Future<PlacemarkData?> getPlacemarkData(CameraPosition cameraPosition) async {
+    double lat = cameraPosition.target.latitude;
+    double lng = cameraPosition.target.longitude;
+    List<Placemark> placemarkList = await placemarkFromCoordinates(lat, lng);
+    if (placemarkList != null) {
+      if (placemarkList.isNotEmpty) {
+        String direction = placemarkList[0].thoroughfare!;
+        String street = placemarkList[0].subThoroughfare!;
+        String city = placemarkList[0].locality!;
+        String department = placemarkList[0].administrativeArea!;
+
+        PlacemarkData placemarkData = PlacemarkData(
+          address: '$direction, $street, $city, $department',
+          lat: lat,
+          lng: lng
+        );
+
+        return placemarkData;
+      }
+    }
+    return null;
   }
 
 
