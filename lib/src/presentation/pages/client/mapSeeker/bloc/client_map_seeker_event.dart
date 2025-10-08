@@ -18,3 +18,15 @@ class OnCameraMove extends ClientMapSeekerEvent {
 }
 
 class OnCameraIdle extends ClientMapSeekerEvent {}
+
+class OnAutocompletePickUpSelected extends ClientMapSeekerEvent {
+  double lat;
+  double lng;
+  OnAutocompletePickUpSelected({required this.lat, required this.lng});
+}
+
+class OnAutocompleteDestionationSelected extends ClientMapSeekerEvent {
+  double lat;
+  double lng;
+  OnAutocompleteDestionationSelected({required this.lat, required this.lng});
+}

@@ -79,6 +79,18 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
         state.copyWith(placemarkData: placemarkData)
       );
     });
+
+    on<OnAutocompletePickUpSelected>((event, emit) {
+      emit(
+        state.copyWith(pickUpLatLng: LatLng(event.lat, event.lng))
+      );
+    });
+
+    on<OnAutocompleteDestionationSelected>((event, emit) {
+      emit(
+        state.copyWith(destionationLatLng: LatLng(event.lat, event.lng))
+      );
+    });
   }
 
 }

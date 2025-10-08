@@ -11,12 +11,16 @@ class ClientMapSeekerState extends Equatable {
   final CameraPosition cameraPosition;
   final PlacemarkData? placemarkData;
   final Map<MarkerId, Marker> markers;
+  final LatLng? pickUpLatLng;
+  final LatLng? destionationLatLng;
   
   const ClientMapSeekerState({
     this.position,
     this.controller,
     this.cameraPosition = const CameraPosition(target: LatLng(20.677260421532807, -103.34636321091749), zoom: 14.0, ),
     this.placemarkData,
+    this.pickUpLatLng,
+    this.destionationLatLng,
     this.markers = const <MarkerId, Marker>{},
   });
 
@@ -25,6 +29,8 @@ class ClientMapSeekerState extends Equatable {
     Completer<GoogleMapController>? controller,
     CameraPosition? cameraPosition,
     PlacemarkData? placemarkData,
+    LatLng? pickUpLatLng,
+    LatLng? destionationLatLng,
     Map<MarkerId, Marker>? markers
   }) {
     return ClientMapSeekerState(
@@ -32,11 +38,13 @@ class ClientMapSeekerState extends Equatable {
       markers: markers ?? this.markers,
       controller: controller ?? this.controller,
       cameraPosition: cameraPosition ?? this.cameraPosition,
-      placemarkData: placemarkData ?? this.placemarkData
+      placemarkData: placemarkData ?? this.placemarkData,
+      pickUpLatLng: pickUpLatLng ?? this.pickUpLatLng,
+      destionationLatLng: destionationLatLng ?? this.destionationLatLng,
     );
   }
 
   @override
-  List<Object?> get props => [position, markers, controller, cameraPosition, placemarkData];
+  List<Object?> get props => [position, markers, controller, cameraPosition, placemarkData, pickUpLatLng, destionationLatLng];
 
 }

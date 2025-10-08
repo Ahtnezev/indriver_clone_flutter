@@ -72,12 +72,26 @@ class _ClientMapSeekerPageState extends State<ClientMapSeekerPage> {
                               lng: double.parse(prediction.lng!)
                             )
                           );
+                          context.read<ClientMapSeekerBloc>().add(
+                            OnAutocompletePickUpSelected(
+                              lat: double.parse(prediction.lat!),
+                              lng: double.parse(prediction.lng!)
+                            )
+                          );
                         }
 
                         debugPrint("Recoger en Lat: ${prediction.lat}");
                         debugPrint("Recoger en Lng: ${prediction.lng}");
                       }),
                       GooglePlacesAutoComplete(destinationController, "Dejar en", (prediction) {
+
+                        context.read<ClientMapSeekerBloc>().add(
+                          OnAutocompleteDestionationSelected(
+                            lat: double.parse(prediction.lat!),
+                            lng: double.parse(prediction.lng!)
+                          )
+                        );
+
                         debugPrint("Dejar en Lat: ${prediction.lat}");
                         debugPrint("Dejar en Lng: ${prediction.lng}");
                       }),
