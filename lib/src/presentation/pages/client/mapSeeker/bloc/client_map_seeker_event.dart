@@ -22,11 +22,13 @@ class OnCameraIdle extends ClientMapSeekerEvent {}
 class OnAutocompletePickUpSelected extends ClientMapSeekerEvent {
   double lat;
   double lng;
-  OnAutocompletePickUpSelected({required this.lat, required this.lng});
+  String pickupDescription;
+  OnAutocompletePickUpSelected({required this.lat, required this.lng, required this.pickupDescription});
 }
 
 class OnAutocompleteDestionationSelected extends ClientMapSeekerEvent {
   double lat;
   double lng;
-  OnAutocompleteDestionationSelected({required this.lat, required this.lng});
+  String destinationDescription;
+  OnAutocompleteDestionationSelected({required this.lat, required this.lng, required this.destinationDescription});
 }

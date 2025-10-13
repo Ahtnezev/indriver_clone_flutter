@@ -6,6 +6,7 @@ import 'package:indriver_clone_flutter/injection.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/login_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/register_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/client_home_page.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/client/mapBookingInfo/client_map_booking_info_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/profile_update_page.dart';
 
 // to continue the course, we need go to: https://cloud.google.com/maps-platform/ and enable Maps SDK for Android and Maps SDK for iOS
@@ -37,7 +38,8 @@ class MainApp extends StatelessWidget {
           'login': (BuildContext context) => LoginPage(),
           'register': (BuildContext context) => RegisterPage(),
           'client/home': (BuildContext context) => ClientHomePage(),
-          'profile/update': (BuildContext context) => ProfileUpdatePage()
+          'profile/update': (BuildContext context) => ProfileUpdatePage(),
+          'client/map/booking': (BuildContext context) => ClientMapBookingInfoPage(),
         },
         // home: LoginPage(),
       ),

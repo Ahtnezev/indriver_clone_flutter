@@ -76,19 +76,25 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
     on<OnCameraIdle>((event, emit) async {
       PlacemarkData placemarkData = await geolocatorUseCases.getPlacemarkData.run(state.cameraPosition);
       emit(
-        state.copyWith(placemarkData: placemarkData)
+        state.copyWith(placemarkData: placemarkData),
       );
     });
 
     on<OnAutocompletePickUpSelected>((event, emit) {
       emit(
-        state.copyWith(pickUpLatLng: LatLng(event.lat, event.lng))
+        state.copyWith(
+          pickUpLatLng: LatLng(event.lat, event.lng),
+          pickupDescription: event.pickupDescription
+        )
       );
     });
 
     on<OnAutocompleteDestionationSelected>((event, emit) {
       emit(
-        state.copyWith(destionationLatLng: LatLng(event.lat, event.lng))
+        state.copyWith(
+          destionationLatLng: LatLng(event.lat, event.lng),
+          pickupDescription: event.destinationDescription
+        )
       );
     });
   }
