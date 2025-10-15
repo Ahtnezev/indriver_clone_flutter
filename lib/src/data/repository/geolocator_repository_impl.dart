@@ -68,26 +68,31 @@ class GeolocatorRepositoryImpl implements GeolocatorRepository {
 
   @override
   Future<PlacemarkData?> getPlacemarkData(CameraPosition cameraPosition) async {
-    double lat = cameraPosition.target.latitude;
-    double lng = cameraPosition.target.longitude;
-    List<Placemark> placemarkList = await placemarkFromCoordinates(lat, lng);
-    if (placemarkList != null) {
-      if (placemarkList.isNotEmpty) {
-        String direction = placemarkList[0].thoroughfare!;
-        String street = placemarkList[0].subThoroughfare!;
-        String city = placemarkList[0].locality!;
-        String department = placemarkList[0].administrativeArea!;
+    try {
+      double lat = cameraPosition.target.latitude;
+      double lng = cameraPosition.target.longitude;
+      List<Placemark> placemarkList = await placemarkFromCoordinates(lat, lng);
+      if (placemarkList != null) {
+        if (placemarkList.isNotEmpty) {
+          String direction = placemarkList[0].thoroughfare!;
+          String street = placemarkList[0].subThoroughfare!;
+          String city = placemarkList[0].locality!;
+          String department = placemarkList[0].administrativeArea!;
 
-        PlacemarkData placemarkData = PlacemarkData(
-          address: '$direction, $street, $city, $department',
-          lat: lat,
-          lng: lng
-        );
+          PlacemarkData placemarkData = PlacemarkData(
+            address: '$direction, $street, $city, $department',
+            lat: lat,
+            lng: lng
+          );
 
-        return placemarkData;
+          return placemarkData;
+        }
       }
+    } catch (e) {
+      debugPrint('Error 493: $e');
+      return null;  
     }
-    return null;
+    
   }
 
 
