@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:indriver_clone_flutter/src/data/api/api_key_google.dart';
 
 class GooglePlacesAutoComplete extends StatelessWidget {
   TextEditingController controller;
@@ -23,7 +24,7 @@ class GooglePlacesAutoComplete extends StatelessWidget {
         boxDecoration:  BoxDecoration(
           color: Colors.white
         ),
-        googleAPIKey:"YOUR_GOOGLE_API_KEY", //! important
+        googleAPIKey: API_KEY_GOOGLE, //! important
         inputDecoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(

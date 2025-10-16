@@ -123,7 +123,7 @@ class ClientMapSeekerContent extends StatelessWidget {
               'client/map/booking',
               arguments: {
                 'pickUpLatLng': state.pickUpLatLng,
-                'destionationLatLng': state.destionationLatLng,
+                'destinationLatLng': state.destinationLatLng,
                 'pickUpDescription': state.pickupDescription,
                 'destinationDescription': state.destinationDescription,
               }

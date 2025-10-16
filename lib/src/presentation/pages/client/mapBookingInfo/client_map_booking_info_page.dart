@@ -20,7 +20,9 @@ class _ClientMapBookingInfoPageState extends State<ClientMapBookingInfoPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      context.read<ClientMapBookingInfoBloc>().add(CLientMapBookingInfoInitEvent());
+      context.read<ClientMapBookingInfoBloc>().add(CLientMapBookingInfoInitEvent(
+        // pickUpLatLng: 
+      ));
     });
   }
 
@@ -30,7 +32,7 @@ class _ClientMapBookingInfoPageState extends State<ClientMapBookingInfoPage> {
     Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     LatLng pickUpLatLng = args['pickUpLatLng'];
-    LatLng destinationUpLatLng = args['destionationLatLng'];
+    LatLng destinationUpLatLng = args['destinationLatLng'];
     LatLng pickUpDescription = args['pickUpDescription'];
     LatLng destinationDescription = args['destinationDescription'];
 

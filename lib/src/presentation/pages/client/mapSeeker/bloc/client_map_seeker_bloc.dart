@@ -92,7 +92,7 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
     on<OnAutocompleteDestionationSelected>((event, emit) {
       emit(
         state.copyWith(
-          destionationLatLng: LatLng(event.lat, event.lng),
+          destinationLatLng: LatLng(event.lat, event.lng),
           pickupDescription: event.destinationDescription
         )
       );

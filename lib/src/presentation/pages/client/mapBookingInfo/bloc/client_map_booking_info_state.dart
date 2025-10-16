@@ -12,7 +12,7 @@ class ClientMapBookingInfoState extends Equatable {
   final CameraPosition cameraPosition;
   final Map<MarkerId, Marker> markers;
   final LatLng? pickUpLatLng;
-  final LatLng? destionationLatLng;
+  final LatLng? destinationLatLng;
   final String pickupDescription;
   final String destinationDescription;
   
@@ -21,7 +21,7 @@ class ClientMapBookingInfoState extends Equatable {
     this.controller,
     this.cameraPosition = const CameraPosition(target: LatLng(20.677260421532807, -103.34636321091749), zoom: 14.0, ),
     this.pickUpLatLng,
-    this.destionationLatLng,
+    this.destinationLatLng,
     this.pickupDescription = '',
     this.destinationDescription = '',
     this.markers = const <MarkerId, Marker>{},
@@ -33,7 +33,7 @@ class ClientMapBookingInfoState extends Equatable {
     CameraPosition? cameraPosition,
     PlacemarkData? placemarkData,
     LatLng? pickUpLatLng,
-    LatLng? destionationLatLng,
+    LatLng? destinationLatLng,
     String? pickupDescription,
     String? destinationDescription,
     Map<MarkerId, Marker>? markers
@@ -44,13 +44,13 @@ class ClientMapBookingInfoState extends Equatable {
       controller: controller ?? this.controller,
       cameraPosition: cameraPosition ?? this.cameraPosition,
       pickUpLatLng: pickUpLatLng ?? this.pickUpLatLng,
-      destionationLatLng: destionationLatLng ?? this.destionationLatLng,
+      destinationLatLng: destinationLatLng ?? this.destinationLatLng,
       pickupDescription: pickupDescription ?? this.pickupDescription,
       destinationDescription: destinationDescription ?? this.destinationDescription,
     );
   }
 
   @override
-  List<Object?> get props => [position, markers, controller, cameraPosition, pickUpLatLng, destionationLatLng, pickupDescription, destinationDescription];
+  List<Object?> get props => [position, markers, controller, cameraPosition, pickUpLatLng, destinationLatLng, pickupDescription, destinationDescription];
 
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:indriver_clone_flutter/src/data/api/api_key_google.dart';
 import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 import 'package:indriver_clone_flutter/src/domain/repository/geolocator_repository.dart';
 
@@ -93,6 +95,25 @@ class GeolocatorRepositoryImpl implements GeolocatorRepository {
       return null;  
     }
     
+  }
+  
+  @override
+  Future<List<LatLng>> getPolyline(LatLng pickupLatLng, LatLng destinationLatLng) async {
+    final result = await PolylinePoints(apiKey: API_KEY_GOOGLE).getRouteBetweenCoordinatesV2(
+      request: RoutesApiRequest(
+        origin: PointLatLng(pickupLatLng.latitude, pickupLatLng.longitude),
+        destination: PointLatLng(destinationLatLng.latitude, destinationLatLng.longitude),
+        travelMode: TravelMode.driving,
+      ),
+    );
+    List<LatLng> polylineCoordinates = [];
+    if (result.primaryRoute?.polylinePoints != null) {
+      result.primaryRoute?.polylinePoints?.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    
+    return polylineCoordinates;
   }
 
 
