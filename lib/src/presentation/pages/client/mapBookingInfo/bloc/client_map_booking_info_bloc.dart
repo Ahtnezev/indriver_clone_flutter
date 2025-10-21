@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:indriver_clone_flutter/src/domain/useCases/geolocator/geolocator_use_cases.dart';
@@ -35,6 +36,26 @@ class ClientMapBookingInfoBloc extends Bloc<ClientMapBookingInfoEvent , ClientMa
         ),
       );
     });
+
+    on<AddPolyline>((event, emit) async {
+      List<LatLng> polylinesCoordinates = await geolocatorUseCases.getPolyline.run(state.pickUpLatLng!, state.destinationLatLng!);
+
+      PolylineId id = PolylineId("MyRoute");
+      Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.blueAccent,
+        points: polylinesCoordinates,
+        width: 6
+      );
+      emit(
+        state.copyWith(
+          polylines: {
+            id: polyline
+          }
+        )
+      );
+    });
+
   }
   
 }

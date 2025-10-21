@@ -11,6 +11,7 @@ class ClientMapBookingInfoState extends Equatable {
   final Position? position;
   final CameraPosition cameraPosition;
   final Map<MarkerId, Marker> markers;
+  final Map<PolylineId, Polyline> polylines;
   final LatLng? pickUpLatLng;
   final LatLng? destinationLatLng;
   final String pickupDescription;
@@ -25,6 +26,7 @@ class ClientMapBookingInfoState extends Equatable {
     this.pickupDescription = '',
     this.destinationDescription = '',
     this.markers = const <MarkerId, Marker>{},
+    this.polylines = const <PolylineId, Polyline>{},
   });
 
   ClientMapBookingInfoState copyWith({
@@ -36,11 +38,13 @@ class ClientMapBookingInfoState extends Equatable {
     LatLng? destinationLatLng,
     String? pickupDescription,
     String? destinationDescription,
-    Map<MarkerId, Marker>? markers
+    Map<MarkerId, Marker>? markers,
+    Map<PolylineId, Polyline>? polylines
   }) {
     return ClientMapBookingInfoState(
       position: position ?? this.position,
       markers: markers ?? this.markers,
+      polylines: polylines ?? this.polylines,
       controller: controller ?? this.controller,
       cameraPosition: cameraPosition ?? this.cameraPosition,
       pickUpLatLng: pickUpLatLng ?? this.pickUpLatLng,
@@ -51,6 +55,6 @@ class ClientMapBookingInfoState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [position, markers, controller, cameraPosition, pickUpLatLng, destinationLatLng, pickupDescription, destinationDescription];
+  List<Object?> get props => [position, markers, polylines, controller, cameraPosition, pickUpLatLng, destinationLatLng, pickupDescription, destinationDescription];
 
 }

@@ -24,3 +24,5 @@ class ChangeMapCameraPosition extends ClientMapBookingInfoEvent {
 
   ChangeMapCameraPosition({required this.lat, required this.lng});
 }
+
+class AddPolyline extends ClientMapBookingInfoEvent {}

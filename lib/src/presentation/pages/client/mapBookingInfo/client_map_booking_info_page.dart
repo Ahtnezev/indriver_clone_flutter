@@ -6,6 +6,8 @@ import 'package:indriver_clone_flutter/src/presentation/pages/client/mapBookingI
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapBookingInfo/bloc/client_map_booking_info_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapBookingInfo/client_map_booking_info_content.dart';
 
+//! !pending: we need to give permission in google console (google cloud) > enable apis and services > Directions API
+
 class ClientMapBookingInfoPage extends StatefulWidget {
   const ClientMapBookingInfoPage({super.key});
 
@@ -15,14 +17,23 @@ class ClientMapBookingInfoPage extends StatefulWidget {
 }
 
 class _ClientMapBookingInfoPageState extends State<ClientMapBookingInfoPage> {
+  LatLng? pickUpLatLng;
+  LatLng? destinationUpLatLng;
+  String? pickUpDescription;
+  String? destinationDescription;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       context.read<ClientMapBookingInfoBloc>().add(CLientMapBookingInfoInitEvent(
-        // pickUpLatLng: 
+        pickUpLatLng: pickUpLatLng!,
+        destinationLatLng: destinationUpLatLng!,
+        pickupDescription: pickUpDescription!,
+        destinationDescription: destinationDescription!,
       ));
+      context.read<ClientMapBookingInfoBloc>().add(AddPolyline());
+      context.read<ClientMapBookingInfoBloc>().add(ChangeMapCameraPosition(lat: pickUpLatLng!.latitude, lng: pickUpLatLng!.longitude));
     });
   }
 
@@ -31,16 +42,16 @@ class _ClientMapBookingInfoPageState extends State<ClientMapBookingInfoPage> {
     //^ this comes from client_map_seeker_content file, in the arguments
     Map<String, dynamic> args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    LatLng pickUpLatLng = args['pickUpLatLng'];
-    LatLng destinationUpLatLng = args['destinationLatLng'];
-    LatLng pickUpDescription = args['pickUpDescription'];
-    LatLng destinationDescription = args['destinationDescription'];
+    pickUpLatLng = args['pickUpLatLng'];
+    destinationUpLatLng = args['destinationLatLng'];
+    pickUpDescription = args['pickUpDescription'];
+    destinationDescription = args['destinationDescription'];
 
     // when the user set the origen and destino and then press the button to redirect another screen prints those
-    debugPrint('pickupLatLng: ${pickUpLatLng.toJson()}');
-    debugPrint('destinationUpLatLng: ${destinationUpLatLng.toJson()}');
-    debugPrint('pickUpDescription: $pickUpDescription');
-    debugPrint('destinationDescription: $destinationDescription');
+    // debugPrint('pickupLatLng: ${pickUpLatLng.toJson()}');
+    // debugPrint('destinationUpLatLng: ${destinationUpLatLng.toJson()}');
+    // debugPrint('pickUpDescription: $pickUpDescription');
+    // debugPrint('destinationDescription: $destinationDescription');
 
     return Scaffold(
       body: BlocBuilder<ClientMapBookingInfoBloc, ClientMapBookingInfoState>(

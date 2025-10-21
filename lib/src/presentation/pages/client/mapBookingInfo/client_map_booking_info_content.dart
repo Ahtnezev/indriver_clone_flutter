@@ -108,12 +108,12 @@ class ClientMapBookingInfoContent extends StatelessWidget {
 
   Widget _googleMaps(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.52,
+      height: MediaQuery.of(context).size.height * 0.53, //! !pending: we need to adjust and show the controls + - zoom
       child: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: state.cameraPosition,
         // markers: Set<Marker>.of(state.markers.values),
-      
+        polylines: Set<Polyline>.of(state.polylines.values),
         onMapCreated: (GoogleMapController controller) {
           //? set a style dark, more: https://mapstyle.withgoogle.com/
           //! important: remove spaces from json: https://codebeautify.org/remove-extra-spaces
