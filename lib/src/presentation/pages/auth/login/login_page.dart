@@ -33,15 +33,13 @@ class _LoginPageState extends State<LoginPage> {
           } else if (response is Success) {
             debugPrint("Success Data: ${response.data}");
             final authResponse = response.data as AuthResponse;
-            context.read<LoginBloc>().add(
-              SaveUserSession(authResponse: authResponse),
-            );
+            context.read<LoginBloc>().add(SaveUserSession(authResponse: authResponse));
 
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              'client/home',
-              (route) => false,
-            ); // no store history in screens 
+            if(authResponse.user.roles!.length > 1) {
+              Navigator.pushNamedAndRemoveUntil(context, 'client/home', (route) => false);
+            } else {
+              Navigator.pushNamedAndRemoveUntil(context, 'client/home', (route) => false); // no store history in screens 
+            }
 
           }
         },

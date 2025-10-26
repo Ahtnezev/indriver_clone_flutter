@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indriver_clone_flutter/main.dart';
-import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
-import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_event.dart';
-import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_state.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/client_map_seeker_page.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/driver/bloc/driver_home_bloc.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/driver/bloc/driver_home_state.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/driver/bloc/driver_home_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/profile_info_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/roles/roles_page.dart';
 
-class ClientHomePage extends StatefulWidget {
-  const ClientHomePage({super.key});
+class DriverHomePage extends StatefulWidget {
+  const DriverHomePage({super.key});
 
   @override
-  State<ClientHomePage> createState() => _ClientHomePageState();
+  State<DriverHomePage> createState() => _DriverHomePageState();
 }
 
-class _ClientHomePageState extends State<ClientHomePage> {
+class _DriverHomePageState extends State<DriverHomePage> {
   List<Widget> pageList = <Widget>[
     ClientMapSeekerPage(),
     ProfileInfoPage(),
@@ -26,7 +26,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Menu de opciones")),
-      drawer: BlocBuilder<ClientHomeBloc, ClientHomeState>(
+      drawer: BlocBuilder<DriverHomeBloc, DriverHomeState>(
         builder: (context, state) {
           return Drawer(
             child: ListView(
@@ -44,17 +44,17 @@ class _ClientHomePageState extends State<ClientHomePage> {
                     ),
                   ),
                   child: Text(
-                    "Menu del cliente",
+                    "Menu del conductor",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
 
                 
                 ListTile(
-                  title: Text("Mapa de busqueda"),
+                  title: Text("Mapa de viajes"),
                   selected: state.pageIndex == 0,
                   onTap: () {
-                    context.read<ClientHomeBloc>().add(
+                    context.read<DriverHomeBloc>().add(
                       ChangeDrawerPage(pageIndex: 0),
                     );
                     Navigator.pop(
@@ -68,7 +68,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                   title: Text("Perfil del usuario"),
                   selected: state.pageIndex == 1,
                   onTap: () {
-                    context.read<ClientHomeBloc>().add(
+                    context.read<DriverHomeBloc>().add(
                       ChangeDrawerPage(pageIndex: 1),
                     );
                     Navigator.pop(
@@ -81,7 +81,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                   title: Text("Roles de usuario"),
                   selected: state.pageIndex == 2,
                   onTap: () {
-                    context.read<ClientHomeBloc>().add(
+                    context.read<DriverHomeBloc>().add(
                       ChangeDrawerPage(pageIndex: 2),
                     );
                     Navigator.pop(
@@ -94,7 +94,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
                 ListTile(
                   title: Text("Cerrar sesion"),
                   onTap: () {
-                    context.read<ClientHomeBloc>().add(Logout());
+                    context.read<DriverHomeBloc>().add(Logout());
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => MainApp()),
@@ -108,7 +108,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
         },
       ),
       //! we need to register this new bloc in bloc_providers.dart file
-      body: BlocBuilder<ClientHomeBloc, ClientHomeState>(
+      body: BlocBuilder<DriverHomeBloc, DriverHomeState>(
         builder: (context, state) {
           return pageList[state.pageIndex];
         },
