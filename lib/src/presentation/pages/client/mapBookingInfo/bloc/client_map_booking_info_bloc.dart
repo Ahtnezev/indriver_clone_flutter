@@ -11,8 +11,9 @@ class ClientMapBookingInfoBloc extends Bloc<ClientMapBookingInfoEvent , ClientMa
   GeolocatorUseCases geolocatorUseCases;
 
   ClientMapBookingInfoBloc(this.geolocatorUseCases) : super(ClientMapBookingInfoState()) {
-    on<CLientMapBookingInfoInitEvent>((event, emit) {
+    on<CLientMapBookingInfoInitEvent>((event, emit) async {
       final Completer<GoogleMapController> controller = Completer<GoogleMapController>();
+
       emit(
         state.copyWith(
           pickUpLatLng: event.pickUpLatLng,
@@ -22,6 +23,36 @@ class ClientMapBookingInfoBloc extends Bloc<ClientMapBookingInfoEvent , ClientMa
           controller: controller,
         )
       );
+
+      BitmapDescriptor pickUpDescriptor = await geolocatorUseCases.createMarker.run("assets/img/pin_white.png");
+      BitmapDescriptor destinationDescriptor = await geolocatorUseCases.createMarker.run("assets/img/flag.png");
+      Marker markerPickUp = geolocatorUseCases.getMarker.run(
+        'pickup',
+        state.pickUpLatLng!.latitude,
+        state.pickUpLatLng!.longitude,
+        'Lugar de recogida',
+        'Debes esperar aqui mientras llega el conductor',
+        pickUpDescriptor,
+      );
+      Marker markerDestionation = geolocatorUseCases.getMarker.run(
+        'destination',
+        state.destinationLatLng!.latitude,
+        state.destinationLatLng!.longitude,
+        'Tu destino',
+        '',
+        destinationDescriptor,
+      );
+
+      emit(
+        state.copyWith(
+          markers: {
+            markerPickUp.markerId: markerPickUp,
+            markerDestionation.mapsId: markerDestionation
+          }
+        )
+      );
+
+
     });
 
     on<ChangeMapCameraPosition>((event, emit) async {

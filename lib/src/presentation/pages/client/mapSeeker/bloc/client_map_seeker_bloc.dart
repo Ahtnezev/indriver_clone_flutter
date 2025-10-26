@@ -29,18 +29,6 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
         ),
       );
 
-      // BitmapDescriptor imageMarker = await geolocatorUseCases.createMarker.run(
-      //   "assets/img/location_blue.png",
-      // );
-      // Marker marker = geolocatorUseCases.getMarker.run(
-      //   'MyLocation',
-      //   position.latitude,
-      //   position.longitude,
-      //   'Mi posicion',
-      //   '',
-      //   imageMarker,
-      // );
-
       emit(
         state.copyWith(
           position: position,
