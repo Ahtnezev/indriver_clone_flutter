@@ -9,7 +9,7 @@ import 'package:indriver_clone_flutter/src/presentation/pages/client/home/client
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapBookingInfo/client_map_booking_info_page.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/update/profile_update_page.dart';
 
-// to continue the course, we need go to: https://cloud.google.com/maps-platform/ and enable Maps SDK for Android and Maps SDK for iOS
+// !pending: to continue the course, we need go to: https://cloud.google.com/maps-platform/ and enable Maps SDK for Android and Maps SDK for iOS
 // needs credit card:p
 // Video 67: Seccion 10 Google Maps, min 4:30
 void main() async {

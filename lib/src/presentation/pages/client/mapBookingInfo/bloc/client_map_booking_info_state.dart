@@ -5,30 +5,31 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 
-class ClientMapSeekerState extends Equatable {
+class ClientMapBookingInfoState extends Equatable {
+
   final Completer<GoogleMapController>? controller;
   final Position? position;
   final CameraPosition cameraPosition;
-  final PlacemarkData? placemarkData;
   final Map<MarkerId, Marker> markers;
+  final Map<PolylineId, Polyline> polylines;
   final LatLng? pickUpLatLng;
   final LatLng? destinationLatLng;
   final String pickupDescription;
   final String destinationDescription;
   
-  ClientMapSeekerState({
+  ClientMapBookingInfoState({
     this.position,
     this.controller,
     this.cameraPosition = const CameraPosition(target: LatLng(20.677260421532807, -103.34636321091749), zoom: 14.0, ),
-    this.placemarkData,
     this.pickUpLatLng,
     this.destinationLatLng,
     this.pickupDescription = '',
     this.destinationDescription = '',
     this.markers = const <MarkerId, Marker>{},
+    this.polylines = const <PolylineId, Polyline>{},
   });
 
-  ClientMapSeekerState copyWith({
+  ClientMapBookingInfoState copyWith({
     Position? position,
     Completer<GoogleMapController>? controller,
     CameraPosition? cameraPosition,
@@ -37,14 +38,15 @@ class ClientMapSeekerState extends Equatable {
     LatLng? destinationLatLng,
     String? pickupDescription,
     String? destinationDescription,
-    Map<MarkerId, Marker>? markers
+    Map<MarkerId, Marker>? markers,
+    Map<PolylineId, Polyline>? polylines
   }) {
-    return ClientMapSeekerState(
+    return ClientMapBookingInfoState(
       position: position ?? this.position,
       markers: markers ?? this.markers,
+      polylines: polylines ?? this.polylines,
       controller: controller ?? this.controller,
       cameraPosition: cameraPosition ?? this.cameraPosition,
-      placemarkData: placemarkData ?? this.placemarkData,
       pickUpLatLng: pickUpLatLng ?? this.pickUpLatLng,
       destinationLatLng: destinationLatLng ?? this.destinationLatLng,
       pickupDescription: pickupDescription ?? this.pickupDescription,
@@ -53,6 +55,6 @@ class ClientMapSeekerState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [position, markers, controller, cameraPosition, placemarkData, pickUpLatLng, destinationLatLng, pickupDescription, destinationDescription];
+  List<Object?> get props => [position, markers, polylines, controller, cameraPosition, pickUpLatLng, destinationLatLng, pickupDescription, destinationDescription];
 
 }

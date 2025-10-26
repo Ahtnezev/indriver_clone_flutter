@@ -29,18 +29,6 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
         ),
       );
 
-      // BitmapDescriptor imageMarker = await geolocatorUseCases.createMarker.run(
-      //   "assets/img/location_blue.png",
-      // );
-      // Marker marker = geolocatorUseCases.getMarker.run(
-      //   'MyLocation',
-      //   position.latitude,
-      //   position.longitude,
-      //   'Mi posicion',
-      //   '',
-      //   imageMarker,
-      // );
-
       emit(
         state.copyWith(
           position: position,
@@ -92,7 +80,7 @@ class ClientMapSeekerBloc extends Bloc<ClientMapSeekerEvent, ClientMapSeekerStat
     on<OnAutocompleteDestionationSelected>((event, emit) {
       emit(
         state.copyWith(
-          destionationLatLng: LatLng(event.lat, event.lng),
+          destinationLatLng: LatLng(event.lat, event.lng),
           pickupDescription: event.destinationDescription
         )
       );

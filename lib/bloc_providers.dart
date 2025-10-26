@@ -10,6 +10,7 @@ import 'package:indriver_clone_flutter/src/presentation/pages/auth/login/bloc/lo
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/bloc/register_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/auth/register/bloc/register_event.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/home/bloc/client_home_bloc.dart';
+import 'package:indriver_clone_flutter/src/presentation/pages/client/mapBookingInfo/bloc/client_map_booking_info_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/client/mapSeeker/bloc/client_map_seeker_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/bloc/profile_info_bloc.dart';
 import 'package:indriver_clone_flutter/src/presentation/pages/profile/info/bloc/profile_info_event.dart';
@@ -46,6 +47,12 @@ List<BlocProvider> blocProviders = [
     create:
         (context) =>
             ClientMapSeekerBloc(locator<GeolocatorUseCases>())
+              ,
+  ),
+  BlocProvider<ClientMapBookingInfoBloc>(
+    create:
+        (context) =>
+            ClientMapBookingInfoBloc(locator<GeolocatorUseCases>())
               ,
   ),
 ];

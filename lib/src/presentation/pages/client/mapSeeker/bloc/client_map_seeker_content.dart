@@ -69,6 +69,16 @@ class ClientMapSeekerContent extends StatelessWidget {
       onCameraIdle: ()async {
         context.read<ClientMapSeekerBloc>().add(OnCameraIdle());
         pickUpController.text = state.placemarkData?.address ?? '';
+        //^ stablish the data at momento to redirect another screen in Origen/Destino using icon Mark
+        if (state.placemarkData != null) {
+          context.read<ClientMapSeekerBloc>().add(
+            OnAutocompletePickUpSelected(
+              lat: state.placemarkData!.lat,
+              lng: state.placemarkData!.lng,
+              pickupDescription: state.placemarkData!.address
+            )
+          );
+        }
       },
       onMapCreated: (GoogleMapController controller) {
         //? set a style dark, more: https://mapstyle.withgoogle.com/
@@ -113,7 +123,7 @@ class ClientMapSeekerContent extends StatelessWidget {
               'client/map/booking',
               arguments: {
                 'pickUpLatLng': state.pickUpLatLng,
-                'destionationLatLng': state.destionationLatLng,
+                'destinationLatLng': state.destinationLatLng,
                 'pickUpDescription': state.pickupDescription,
                 'destinationDescription': state.destinationDescription,
               }

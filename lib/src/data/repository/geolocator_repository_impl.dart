@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:indriver_clone_flutter/src/data/api/api_key_google.dart';
 import 'package:indriver_clone_flutter/src/domain/models/placemark_data.dart';
 import 'package:indriver_clone_flutter/src/domain/repository/geolocator_repository.dart';
 
@@ -68,26 +70,50 @@ class GeolocatorRepositoryImpl implements GeolocatorRepository {
 
   @override
   Future<PlacemarkData?> getPlacemarkData(CameraPosition cameraPosition) async {
-    double lat = cameraPosition.target.latitude;
-    double lng = cameraPosition.target.longitude;
-    List<Placemark> placemarkList = await placemarkFromCoordinates(lat, lng);
-    if (placemarkList != null) {
-      if (placemarkList.isNotEmpty) {
-        String direction = placemarkList[0].thoroughfare!;
-        String street = placemarkList[0].subThoroughfare!;
-        String city = placemarkList[0].locality!;
-        String department = placemarkList[0].administrativeArea!;
+    try {
+      double lat = cameraPosition.target.latitude;
+      double lng = cameraPosition.target.longitude;
+      List<Placemark> placemarkList = await placemarkFromCoordinates(lat, lng);
+      if (placemarkList != null) {
+        if (placemarkList.isNotEmpty) {
+          String direction = placemarkList[0].thoroughfare!;
+          String street = placemarkList[0].subThoroughfare!;
+          String city = placemarkList[0].locality!;
+          String department = placemarkList[0].administrativeArea!;
 
-        PlacemarkData placemarkData = PlacemarkData(
-          address: '$direction, $street, $city, $department',
-          lat: lat,
-          lng: lng
-        );
+          PlacemarkData placemarkData = PlacemarkData(
+            address: '$direction, $street, $city, $department',
+            lat: lat,
+            lng: lng
+          );
 
-        return placemarkData;
+          return placemarkData;
+        }
       }
+    } catch (e) {
+      debugPrint('Error 493: $e');
+      return null;  
     }
-    return null;
+    
+  }
+  
+  @override
+  Future<List<LatLng>> getPolyline(LatLng pickupLatLng, LatLng destinationLatLng) async {
+    final result = await PolylinePoints(apiKey: API_KEY_GOOGLE).getRouteBetweenCoordinatesV2(
+      request: RoutesApiRequest(
+        origin: PointLatLng(pickupLatLng.latitude, pickupLatLng.longitude),
+        destination: PointLatLng(destinationLatLng.latitude, destinationLatLng.longitude),
+        travelMode: TravelMode.driving,
+      ),
+    );
+    List<LatLng> polylineCoordinates = [];
+    if (result.primaryRoute?.polylinePoints != null) {
+      result.primaryRoute?.polylinePoints?.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    }
+    
+    return polylineCoordinates;
   }
 
 
