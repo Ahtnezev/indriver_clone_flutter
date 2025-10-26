@@ -23,10 +23,10 @@ class ProfileUpdatePageState extends State<ProfileUpdatePage> {
   @override
   void initState() {
     super.initState();
-    print("METHOD INIT STATE");
+    debugPrint("METHOD INIT STATE");
     // Get the user data from the arguments, we avoid the null user
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      print("METHOD INIT STATE BINDING");
+      debugPrint("METHOD INIT STATE BINDING");
       context.read<ProfileUpdateBloc>().add(
         ProfileUpdateInitEvent(user: user),
       ); //user is null here
@@ -35,7 +35,7 @@ class ProfileUpdatePageState extends State<ProfileUpdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("METHOD BUILD");
+    debugPrint("METHOD BUILD");
     user =
         ModalRoute.of(context)?.settings.arguments
             as User; // receiving arguments
